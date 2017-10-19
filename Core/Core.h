@@ -19,6 +19,7 @@
 
 
 #import <UIKit/UIKit.h>
+#import "ABPFilterLibWrapper.h"
 
 //! Project version number for Core.
 FOUNDATION_EXPORT double CoreVersionNumber;

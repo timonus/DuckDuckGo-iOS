@@ -17,6 +17,26 @@
 		8364F7101F95FA7600562989 /* DisconnectMeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */; };
 		8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */; };
 		836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */; };
+		838DD3D11F98C84D00F003F9 /* base.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3BA1F98C84D00F003F9 /* base.h */; };
+		838DD3D21F98C84D00F003F9 /* HashItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3BB1F98C84D00F003F9 /* HashItem.h */; };
+		838DD3D31F98C84D00F003F9 /* HashSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838DD3BC1F98C84D00F003F9 /* HashSet.cpp */; };
+		838DD3D41F98C84D00F003F9 /* HashSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3BD1F98C84D00F003F9 /* HashSet.h */; };
+		838DD3D51F98C84D00F003F9 /* ABPFilterLibWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3BF1F98C84D00F003F9 /* ABPFilterLibWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		838DD3D61F98C84D00F003F9 /* ABPFilterLibWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 838DD3C01F98C84D00F003F9 /* ABPFilterLibWrapper.mm */; };
+		838DD3D71F98C84D00F003F9 /* ad_block_client.cc in Sources */ = {isa = PBXBuildFile; fileRef = 838DD3C21F98C84D00F003F9 /* ad_block_client.cc */; };
+		838DD3D81F98C84D00F003F9 /* ad_block_client.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3C31F98C84D00F003F9 /* ad_block_client.h */; };
+		838DD3D91F98C84D00F003F9 /* bad_fingerprint.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3C41F98C84D00F003F9 /* bad_fingerprint.h */; };
+		838DD3DA1F98C84D00F003F9 /* bad_fingerprints.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3C51F98C84D00F003F9 /* bad_fingerprints.h */; };
+		838DD3DB1F98C84D00F003F9 /* base.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3C61F98C84D00F003F9 /* base.h */; };
+		838DD3DC1F98C84D00F003F9 /* cosmetic_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 838DD3C71F98C84D00F003F9 /* cosmetic_filter.cc */; };
+		838DD3DD1F98C84D00F003F9 /* cosmetic_filter.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3C81F98C84D00F003F9 /* cosmetic_filter.h */; };
+		838DD3DE1F98C84D00F003F9 /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 838DD3C91F98C84D00F003F9 /* filter.cc */; };
+		838DD3DF1F98C84D00F003F9 /* filter.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3CA1F98C84D00F003F9 /* filter.h */; };
+		838DD3E01F98C84D00F003F9 /* base.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3CC1F98C84D00F003F9 /* base.h */; };
+		838DD3E11F98C84D00F003F9 /* BloomFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838DD3CD1F98C84D00F003F9 /* BloomFilter.cpp */; };
+		838DD3E21F98C84D00F003F9 /* BloomFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3CE1F98C84D00F003F9 /* BloomFilter.h */; };
+		838DD3E31F98C84D00F003F9 /* hashFn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838DD3CF1F98C84D00F003F9 /* hashFn.cpp */; };
+		838DD3E41F98C84D00F003F9 /* hashFn.h in Headers */ = {isa = PBXBuildFile; fileRef = 838DD3D01F98C84D00F003F9 /* hashFn.h */; };
 		839825311F9579EE00AB1338 /* TrackerDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */; };
 		839F047D1F8E8BD000892CD6 /* AppleContentBlockerConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047C1F8E8BCF00892CD6 /* AppleContentBlockerConverter.swift */; };
 		839F047F1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047E1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift */; };
@@ -330,6 +350,26 @@
 		836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerTests.swift; sourceTree = "<group>"; };
 		836B6B6B1F67F11E0061ECFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836B6B711F67F1590061ECFB /* TrackerPageMocks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TrackerPageMocks; sourceTree = "<group>"; };
+		838DD3BA1F98C84D00F003F9 /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
+		838DD3BB1F98C84D00F003F9 /* HashItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashItem.h; sourceTree = "<group>"; };
+		838DD3BC1F98C84D00F003F9 /* HashSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HashSet.cpp; sourceTree = "<group>"; };
+		838DD3BD1F98C84D00F003F9 /* HashSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashSet.h; sourceTree = "<group>"; };
+		838DD3BF1F98C84D00F003F9 /* ABPFilterLibWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPFilterLibWrapper.h; sourceTree = "<group>"; };
+		838DD3C01F98C84D00F003F9 /* ABPFilterLibWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ABPFilterLibWrapper.mm; sourceTree = "<group>"; };
+		838DD3C21F98C84D00F003F9 /* ad_block_client.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_block_client.cc; sourceTree = "<group>"; };
+		838DD3C31F98C84D00F003F9 /* ad_block_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ad_block_client.h; sourceTree = "<group>"; };
+		838DD3C41F98C84D00F003F9 /* bad_fingerprint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bad_fingerprint.h; sourceTree = "<group>"; };
+		838DD3C51F98C84D00F003F9 /* bad_fingerprints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bad_fingerprints.h; sourceTree = "<group>"; };
+		838DD3C61F98C84D00F003F9 /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
+		838DD3C71F98C84D00F003F9 /* cosmetic_filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cosmetic_filter.cc; sourceTree = "<group>"; };
+		838DD3C81F98C84D00F003F9 /* cosmetic_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cosmetic_filter.h; sourceTree = "<group>"; };
+		838DD3C91F98C84D00F003F9 /* filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cc; sourceTree = "<group>"; };
+		838DD3CA1F98C84D00F003F9 /* filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
+		838DD3CC1F98C84D00F003F9 /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
+		838DD3CD1F98C84D00F003F9 /* BloomFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BloomFilter.cpp; sourceTree = "<group>"; };
+		838DD3CE1F98C84D00F003F9 /* BloomFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloomFilter.h; sourceTree = "<group>"; };
+		838DD3CF1F98C84D00F003F9 /* hashFn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hashFn.cpp; sourceTree = "<group>"; };
+		838DD3D01F98C84D00F003F9 /* hashFn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hashFn.h; sourceTree = "<group>"; };
 		8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDetectorTests.swift; sourceTree = "<group>"; };
 		839F047C1F8E8BCF00892CD6 /* AppleContentBlockerConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerConverter.swift; sourceTree = "<group>"; };
 		839F047E1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerConverterTests.swift; sourceTree = "<group>"; };
@@ -743,10 +783,66 @@
 			name = Converters;
 			sourceTree = "<group>";
 		};
+		838DD3B91F98C84D00F003F9 /* Hashset */ = {
+			isa = PBXGroup;
+			children = (
+				838DD3BA1F98C84D00F003F9 /* base.h */,
+				838DD3BB1F98C84D00F003F9 /* HashItem.h */,
+				838DD3BC1F98C84D00F003F9 /* HashSet.cpp */,
+				838DD3BD1F98C84D00F003F9 /* HashSet.h */,
+			);
+			name = Hashset;
+			path = "Third-Party/Hashset";
+			sourceTree = SOURCE_ROOT;
+		};
+		838DD3BE1F98C84D00F003F9 /* AdBlockPlusWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				838DD3BF1F98C84D00F003F9 /* ABPFilterLibWrapper.h */,
+				838DD3C01F98C84D00F003F9 /* ABPFilterLibWrapper.mm */,
+			);
+			name = AdBlockPlusWrapper;
+			path = "Third-Party/AdBlockPlusWrapper";
+			sourceTree = SOURCE_ROOT;
+		};
+		838DD3C11F98C84D00F003F9 /* AdBlockPlus */ = {
+			isa = PBXGroup;
+			children = (
+				838DD3C21F98C84D00F003F9 /* ad_block_client.cc */,
+				838DD3C31F98C84D00F003F9 /* ad_block_client.h */,
+				838DD3C41F98C84D00F003F9 /* bad_fingerprint.h */,
+				838DD3C51F98C84D00F003F9 /* bad_fingerprints.h */,
+				838DD3C61F98C84D00F003F9 /* base.h */,
+				838DD3C71F98C84D00F003F9 /* cosmetic_filter.cc */,
+				838DD3C81F98C84D00F003F9 /* cosmetic_filter.h */,
+				838DD3C91F98C84D00F003F9 /* filter.cc */,
+				838DD3CA1F98C84D00F003F9 /* filter.h */,
+			);
+			name = AdBlockPlus;
+			path = "Third-Party/AdBlockPlus";
+			sourceTree = SOURCE_ROOT;
+		};
+		838DD3CB1F98C84D00F003F9 /* BloomFilter */ = {
+			isa = PBXGroup;
+			children = (
+				838DD3CC1F98C84D00F003F9 /* base.h */,
+				838DD3CD1F98C84D00F003F9 /* BloomFilter.cpp */,
+				838DD3CE1F98C84D00F003F9 /* BloomFilter.h */,
+				838DD3CF1F98C84D00F003F9 /* hashFn.cpp */,
+				838DD3D01F98C84D00F003F9 /* hashFn.h */,
+			);
+			name = BloomFilter;
+			path = "Third-Party/BloomFilter";
+			sourceTree = SOURCE_ROOT;
+		};
 		83B7F6571F968ECE0027461D /* Third-Party */ = {
 			isa = PBXGroup;
 			children = (
 				83B7F6591F968F460027461D /* Brave */,
+				838DD3C11F98C84D00F003F9 /* AdBlockPlus */,
+				838DD3BE1F98C84D00F003F9 /* AdBlockPlusWrapper */,
+				838DD3CB1F98C84D00F003F9 /* BloomFilter */,
+				838DD3B91F98C84D00F003F9 /* Hashset */,
 			);
 			name = "Third-Party";
 			path = ThirdParty;
@@ -1617,7 +1713,20 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				838DD3D91F98C84D00F003F9 /* bad_fingerprint.h in Headers */,
+				838DD3E21F98C84D00F003F9 /* BloomFilter.h in Headers */,
+				838DD3DA1F98C84D00F003F9 /* bad_fingerprints.h in Headers */,
+				838DD3D51F98C84D00F003F9 /* ABPFilterLibWrapper.h in Headers */,
+				838DD3DD1F98C84D00F003F9 /* cosmetic_filter.h in Headers */,
+				838DD3D21F98C84D00F003F9 /* HashItem.h in Headers */,
+				838DD3D81F98C84D00F003F9 /* ad_block_client.h in Headers */,
+				838DD3DF1F98C84D00F003F9 /* filter.h in Headers */,
+				838DD3DB1F98C84D00F003F9 /* base.h in Headers */,
 				F143C2E81E4A4CD400CFDE3A /* Core.h in Headers */,
+				838DD3E41F98C84D00F003F9 /* hashFn.h in Headers */,
+				838DD3D11F98C84D00F003F9 /* base.h in Headers */,
+				838DD3D41F98C84D00F003F9 /* HashSet.h in Headers */,
+				838DD3E01F98C84D00F003F9 /* base.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2165,6 +2274,7 @@
 				F18326871E60542100240060 /* JavascriptLoader.swift in Sources */,
 				83B66D701F94BC2F0065AC80 /* TrackerDetector.swift in Sources */,
 				F1B29E1F1E9A5DA1007F5046 /* UILabelExtension.swift in Sources */,
+				838DD3D31F98C84D00F003F9 /* HashSet.cpp in Sources */,
 				857065761F6ADCF70044DCB1 /* EasylistStore.swift in Sources */,
 				F143C3461E4AA32D00CFDE3A /* SearchBarExtension.swift in Sources */,
 				F1B745221E549D550072547E /* UIColorExtension.swift in Sources */,
@@ -2175,22 +2285,28 @@
 				F143C3291E4A9A0E00CFDE3A /* URLExtension.swift in Sources */,
 				F143C3271E4A9A0E00CFDE3A /* Logger.swift in Sources */,
 				F143C32E1E4A9A4800CFDE3A /* RoundedRectangleView.swift in Sources */,
+				838DD3D71F98C84D00F003F9 /* ad_block_client.cc in Sources */,
 				F1DE785A1E5CD2A70058895A /* UIViewExtension.swift in Sources */,
+				838DD3DE1F98C84D00F003F9 /* filter.cc in Sources */,
 				F143C33D1E4A9A9200CFDE3A /* WKWebViewExtension.swift in Sources */,
+				838DD3E31F98C84D00F003F9 /* hashFn.cpp in Sources */,
 				F11E22F61ED31CB600523BC9 /* JsonError.swift in Sources */,
 				F1134EB51F40AEEA00B73467 /* StatisticsLoader.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
 				830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */,
 				F1B88A101F3BA176000263D6 /* SiteGrade.swift in Sources */,
 				F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */,
+				838DD3D61F98C84D00F003F9 /* ABPFilterLibWrapper.mm in Sources */,
 				F1DA2F701EBCEA8B00313F51 /* SupportedExternalURLScheme.swift in Sources */,
 				F1134EB01F40AC6300B73467 /* AtbParser.swift in Sources */,
 				830C375E1F6C3A3B00E317A7 /* TermsOfServiceStore.swift in Sources */,
+				838DD3E11F98C84D00F003F9 /* BloomFilter.cpp in Sources */,
 				F197EA3C1E6885F20029BDC1 /* TextFieldWithInsets.swift in Sources */,
 				857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */,
 				F14513571F46388F00710C46 /* SiteRating.swift in Sources */,
 				F159BDA71F0C073D00B4A01D /* WebCacheSummary.swift in Sources */,
 				F144846A1F39E3B500F6AD2D /* SiteRatingScoreExtension.swift in Sources */,
+				838DD3DC1F98C84D00F003F9 /* cosmetic_filter.cc in Sources */,
 				F1126DEA1EA5C43C0016A6C7 /* AppEmails.swift in Sources */,
 				85BA79911F6FF75000F59015 /* ContentBlockerStoreConstants.swift in Sources */,
 				85047B861F6887D2002A95D8 /* BlockerListsLoader.swift in Sources */,

@@ -58,7 +58,7 @@ class TrackersDetectorTests: XCTestCase {
     
     override func setUp() {
         mockConifguartion = MockContentBlockerConfigurationStore()
-        testee = TrackerDetector(configuration: mockConifguartion, disconnectTrackers: trackers())
+        testee = TrackerDetector(configuration: mockConifguartion, disconnectTrackers: trackers(), abp: ABPFilterLibWrapper())
     }
 
     func testWhenBlockerEnabledAndUrlIsTrackerThenTrackerIsBlocked() {

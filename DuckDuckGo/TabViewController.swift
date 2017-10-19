@@ -274,7 +274,6 @@ extension TabViewController: WKScriptMessageHandler {
             
         default:
             assertionFailure("Unhandled message: \(message.name)")
-
         }
         
     }

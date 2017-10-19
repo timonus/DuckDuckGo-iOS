@@ -18,7 +18,7 @@
 //
 import Foundation
 
-class EasylistStore {
+public class EasylistStore {
 
     struct CacheNames {
 
@@ -27,12 +27,14 @@ class EasylistStore {
 
     }
 
-    enum Easylist: String {
+    public enum Easylist: String {
 
         case easylist
         case easylistPrivacy
 
     }
+    
+    public init() {}
 
     var hasData: Bool {
         get {
@@ -53,10 +55,14 @@ class EasylistStore {
     }
 
     func load(_ type: Easylist) -> String? {
-        guard let data = try? Data(contentsOf: persistenceLocation(type: type)) else {
+        guard let data = loadData(type) else {
             return nil
         }
         return String(data: data, encoding: .utf8)
+    }
+    
+    public func loadData(_ type: Easylist) -> Data? {
+        return try? Data(contentsOf: persistenceLocation(type: type))
     }
 
     func persistEasylist(data: Data) {

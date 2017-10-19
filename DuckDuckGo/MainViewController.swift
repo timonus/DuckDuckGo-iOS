@@ -55,7 +55,6 @@ class MainViewController: UIViewController {
         attachOmniBar()
         configureTabManager()
         loadInitialView()
-
         fireButton = toolbar.addFireButton { self.launchFireMenu() }
     }
 
@@ -73,7 +72,6 @@ class MainViewController: UIViewController {
             controller.tabsModel = tabManager.model
             return
         }
-
     }
 
     private func configureTabManager() {

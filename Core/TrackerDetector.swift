@@ -22,11 +22,15 @@ import Foundation
 public class TrackerDetector {
     
     private var configuration: ContentBlockerConfigurationStore
+
+    private var abp: ABPFilterLibWrapper
+    
     private var disconnectTrackers: [Tracker]
 
-    public init(configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults(), disconnectTrackers: [Tracker]) {
+    public init(configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults(), disconnectTrackers: [Tracker], abp: ABPFilterLibWrapper) {
         self.configuration = configuration
         self.disconnectTrackers = disconnectTrackers
+        self.abp = abp
     }
         
     public func policy(forUrl url: URL, document documentUrl: URL) -> (tracker: Tracker?, block: Bool) {
@@ -36,7 +40,7 @@ public class TrackerDetector {
             return (nil, false)
         }
         
-        guard let tracker = tracker(forUrl: url) else {
+        guard let tracker = tracker(forUrl: url, documentUrl: documentUrl) else {
             Logger.log(text: "TrackerDetector did NOT detect \(url.absoluteString) as tracker")
             return (nil, false)
         }
@@ -50,7 +54,7 @@ public class TrackerDetector {
         return (tracker, true)
     }
     
-    private func tracker(forUrl url: URL) -> Tracker? {
+    private func tracker(forUrl url: URL, documentUrl: URL) -> Tracker? {
 
         guard let urlHost = url.host else {
             return nil
@@ -69,6 +73,10 @@ public class TrackerDetector {
             }
         }
         
+        if abp.isBlockedIgnoringType(url.absoluteString, mainDocumentUrl: documentUrl.absoluteString) {
+            return Tracker(url: url.absoluteString, parentDomain: nil)
+        }
+        
         return nil
     }
     
@@ -77,5 +85,3 @@ public class TrackerDetector {
     }
 
 }
-
-

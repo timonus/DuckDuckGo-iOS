@@ -25,6 +25,7 @@ class TabManager {
     
     private(set) var model: TabsModel
     private var disconnectMeStore = DisconnectMeStore()
+    private var easyliststore = EasylistStore()
     private var tabControllerCache = [TabViewController]()
     
     private weak var delegate: TabDelegate?
@@ -42,7 +43,12 @@ class TabManager {
     private var trackerDetector: TrackerDetector? {
         guard #available(iOSApplicationExtension 11.0, *) else { return nil }
         let trackers = Array(disconnectMeStore.trackers.values)
-        return TrackerDetector(disconnectTrackers: trackers)
+        let abp = ABPFilterLibWrapper()
+        let easylistStore = EasylistStore()
+        if let easylist = easylistStore.loadData(.easylist) {
+            abp.setDataFile(easylist)
+        }
+        return TrackerDetector(disconnectTrackers: trackers, abp: abp)
     }
     
     private func buildController(forTab tab: Tab) -> TabViewController {
