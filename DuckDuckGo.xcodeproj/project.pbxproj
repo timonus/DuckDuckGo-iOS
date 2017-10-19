@@ -39,6 +39,9 @@
 		839632691F98E0B500435FD2 /* HashItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 839632531F98E0B500435FD2 /* HashItem.h */; };
 		8396326A1F98E0B500435FD2 /* HashSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839632541F98E0B500435FD2 /* HashSet.cpp */; };
 		8396326B1F98E0B500435FD2 /* HashSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 839632551F98E0B500435FD2 /* HashSet.h */; };
+		839632701F991CB100435FD2 /* easylist.json in Resources */ = {isa = PBXBuildFile; fileRef = 8396326E1F991CB000435FD2 /* easylist.json */; };
+		839632711F991CB100435FD2 /* easyprivacy.json in Resources */ = {isa = PBXBuildFile; fileRef = 8396326F1F991CB000435FD2 /* easyprivacy.json */; };
+		839632741F9966B000435FD2 /* AppleEasylistConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839632721F9965F900435FD2 /* AppleEasylistConversionTests.swift */; };
 		839825311F9579EE00AB1338 /* TrackerDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */; };
 		839F047D1F8E8BD000892CD6 /* AppleContentBlockerConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047C1F8E8BCF00892CD6 /* AppleContentBlockerConverter.swift */; };
 		839F047F1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047E1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift */; };
@@ -372,6 +375,9 @@
 		839632531F98E0B500435FD2 /* HashItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashItem.h; sourceTree = "<group>"; };
 		839632541F98E0B500435FD2 /* HashSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HashSet.cpp; sourceTree = "<group>"; };
 		839632551F98E0B500435FD2 /* HashSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashSet.h; sourceTree = "<group>"; };
+		8396326E1F991CB000435FD2 /* easylist.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = easylist.json; sourceTree = "<group>"; };
+		8396326F1F991CB000435FD2 /* easyprivacy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = easyprivacy.json; sourceTree = "<group>"; };
+		839632721F9965F900435FD2 /* AppleEasylistConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleEasylistConversionTests.swift; sourceTree = "<group>"; };
 		8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDetectorTests.swift; sourceTree = "<group>"; };
 		839F047C1F8E8BCF00892CD6 /* AppleContentBlockerConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerConverter.swift; sourceTree = "<group>"; };
 		839F047E1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerConverterTests.swift; sourceTree = "<group>"; };
@@ -690,6 +696,7 @@
 			isa = PBXGroup;
 			children = (
 				839F047E1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift */,
+				839632721F9965F900435FD2 /* AppleEasylistConversionTests.swift */,
 				F11E23081ED3559700523BC9 /* DisconnectMeTrackersParserTests.swift */,
 			);
 			name = Converters;
@@ -770,6 +777,8 @@
 				8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */,
 				857065751F6ADCF70044DCB1 /* EasylistStore.swift */,
 				85F1C3C91F7A4E8000161346 /* ContentBlockerStringCache.swift */,
+				8396326E1F991CB000435FD2 /* easylist.json */,
+				8396326F1F991CB000435FD2 /* easyprivacy.json */,
 			);
 			name = Store;
 			sourceTree = "<group>";
@@ -2020,8 +2029,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				85BA79951F71B37100F59015 /* tlds.js in Resources */,
+				839632711F991CB100435FD2 /* easyprivacy.json in Resources */,
 				85047B821F6827AD002A95D8 /* blockerdata.js in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
+				839632701F991CB100435FD2 /* easylist.json in Resources */,
 				85F1C3C71F7A4C7500161346 /* easylist-parsing.js in Resources */,
 				85FC52641F6BD86700933A70 /* abp-filter-parser-packed-es2015.js in Resources */,
 				85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */,
@@ -2229,6 +2240,7 @@
 				F1B88A111F3BA859000263D6 /* SiteRatingScoreExtensionTests.swift in Sources */,
 				F143C2CC1E4A4B9100CFDE3A /* AppVersionTests.swift in Sources */,
 				F189AED71F18F6DE001EBAE1 /* TabTests.swift in Sources */,
+				839632741F9966B000435FD2 /* AppleEasylistConversionTests.swift in Sources */,
 				F13B4BFB1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift in Sources */,
 				F14513591F4664E900710C46 /* SiteRatingTests.swift in Sources */,
 				F194FAFB1F14E622009B4DF8 /* UIFontExtensionTests.swift in Sources */,

@@ -29,14 +29,24 @@ class FileLoader {
 
     
     func load(fileName: String, fromBundle bundle: Bundle) throws -> Data {
-        
-        let fileUrl = URL(fileURLWithPath: fileName)
-        let baseName = fileUrl.deletingPathExtension().path
-        let ext = fileUrl.pathExtension
-        
-        guard let path = bundle.path(forResource: baseName, ofType: ext) else { throw  FileError.unknownFile }
+        let file = fileComponents(from: fileName)
+        guard let path = bundle.path(forResource: file.name, ofType: file.ext) else { throw  FileError.unknownFile }
         let url = URL(fileURLWithPath: path)
         guard let data = try? Data(contentsOf: url, options: [.mappedIfSafe]) else { throw  FileError.invalidFileContents }
         return data
     }
+    
+    func loadString(fileName: String, fromBundle bundle: Bundle) throws -> String {
+        let file = fileComponents(from: fileName)
+        guard let path = bundle.path(forResource: file.name, ofType: file.ext) else { throw  FileError.unknownFile }
+        return try String(contentsOfFile: path)
+    }
+    
+    private func fileComponents(from fileName: String) -> (name: String, ext: String) {
+        let fileUrl = URL(fileURLWithPath: fileName)
+        let baseName = fileUrl.deletingPathExtension().path
+        let ext = fileUrl.pathExtension
+        return (baseName, ext)
+    }
+
 }

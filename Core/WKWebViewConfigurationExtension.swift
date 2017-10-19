@@ -23,7 +23,9 @@ import WebKit
 extension WKWebViewConfiguration {
     
     struct WebStoreCacheKeys {
-        static let disconnect = "disconnectList"
+        static let disconnect = "disconnect"
+        static let easylist = "easylist"
+        static let easyprivacy = "easyprivacy"
     }
 
     public static func persistent() -> WKWebViewConfiguration {
@@ -68,27 +70,51 @@ extension WKWebViewConfiguration {
     
     @available(iOSApplicationExtension 11.0, *)
     private func loadContentBlockerRules() {
+        
         let configuration = ContentBlockerConfigurationUserDefaults()
+        let bundle = Bundle(for: BundleFinder.self)
+        let fileLoader = FileLoader()
         
         if !configuration.enabled {
             userContentController.removeAllContentRuleLists()
             return
         }
         
+        loadCachedRulelist(identifier: WebStoreCacheKeys.disconnect) { () -> String? in
+            return DisconnectMeStore().appleRulesJson
+        }
+        
+        
+        loadCachedRulelist(identifier: WebStoreCacheKeys.easylist) { () -> String? in
+            return try? fileLoader.loadString(fileName: "easylist.json", fromBundle: bundle)
+        }
+        
+        loadCachedRulelist(identifier: WebStoreCacheKeys.easyprivacy) { () -> String? in
+            return try? fileLoader.loadString(fileName: "easyprivacy.json", fromBundle: bundle)
+        }
+   
+    }
+    
+    @available(iOSApplicationExtension 11.0, *)
+    private func loadCachedRulelist(identifier: String, fallbackDataProvider: @escaping () -> String?) {
         let ruleStore = WKContentRuleListStore.default()!
-        ruleStore.lookUpContentRuleList(forIdentifier: WebStoreCacheKeys.disconnect) {  list, error in
+        ruleStore.lookUpContentRuleList(forIdentifier: identifier) {  list, error in
             
             if let list = list {
                 self.userContentController.add(list)
                 return
             }
             
-            guard let rules = DisconnectMeStore().appleRulesJson else {
+            guard let rules = fallbackDataProvider() else {
+                Logger.log(items: "\(identifier) webkit block list did not load")
                 return
             }
             
-            ruleStore.compileContentRuleList(forIdentifier: WebStoreCacheKeys.disconnect, encodedContentRuleList: rules) { list, error in
-                guard let list = list else { return }
+            ruleStore.compileContentRuleList(forIdentifier: identifier, encodedContentRuleList: rules) { list, error in
+                guard let list = list, error == nil else {
+                    Logger.log(items: "\(identifier) webkit block list did not compile", error ?? "")
+                    return
+                }
                 self.userContentController.add(list)
             }
         }
@@ -169,5 +195,6 @@ fileprivate extension Set where Element == String {
             return "\(result)\(separator) \"\(next)\" : true"
         }).appending("}")
     }
-    
 }
+
+private class BundleFinder {}

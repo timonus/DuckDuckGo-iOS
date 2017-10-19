@@ -40,6 +40,10 @@ class JsonTestDataLoader {
         return try! FileLoader().load(fileName: fileName, fromBundle: bundle)
     }
     
+    func fromJsonFile(_ fileName: String, fromBundle bundle: Bundle) -> Data {
+        return try! FileLoader().load(fileName: fileName, fromBundle: bundle)
+    }
+    
     private var bundle: Bundle {
         return Bundle(for: type(of: self))
     }

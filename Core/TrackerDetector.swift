@@ -36,16 +36,12 @@ public class TrackerDetector {
     public func policy(forUrl url: URL, document documentUrl: URL) -> (tracker: Tracker?, block: Bool) {
         
         if isFirstParty(url, of: documentUrl) {
-            Logger.log(text: "TrackerDetector found first party url \(url.absoluteString)")
             return (nil, false)
         }
         
         guard let tracker = tracker(forUrl: url, documentUrl: documentUrl) else {
-            Logger.log(text: "TrackerDetector did NOT detect \(url.absoluteString) as tracker")
             return (nil, false)
         }
-
-        Logger.log(text: "TrackerDetector DID detect \(url.absoluteString) as tracker")
         
         if !configuration.enabled {
             return (tracker, false)
@@ -55,32 +51,53 @@ public class TrackerDetector {
     }
     
     private func tracker(forUrl url: URL, documentUrl: URL) -> Tracker? {
-
-        guard let urlHost = url.host else {
-            return nil
-        }
-
-        let banned = disconnectTrackers.filter(byCategory: Tracker.Category.banned)
-        for tracker in banned {
-            
-            guard let trackerUrl = URL(string: URL.appendScheme(path: tracker.url)),
-                  let trackerHost = trackerUrl.host else {
-                    continue
-            }
-
-            if isFirstParty(url, of: trackerUrl), urlHost.contains(trackerHost) {
-                return tracker
-            }
+        
+        if let tracker = disconnectTracker(forUrl: url, documentUrl: documentUrl) {
+            Logger.log(items: "TrackerDetector detected DISCONNECT tracker", url.absoluteString)
+            return tracker
         }
         
-        if abp.isBlockedIgnoringType(url.absoluteString, mainDocumentUrl: documentUrl.absoluteString) {
-            return Tracker(url: url.absoluteString, parentDomain: nil)
+        if let tracker = easylistTracker(forUrl: url, documentUrl: documentUrl) {
+            Logger.log(items: "TrackerDetector detected EASYLIST tracker", url.absoluteString)
+            return tracker
         }
         
         return nil
     }
     
+    private func disconnectTracker(forUrl url: URL, documentUrl: URL) -> Tracker? {
+        
+        guard let urlHost = url.host else {
+            return nil
+        }
+        
+        let banned = disconnectTrackers.filter(byCategory: Tracker.Category.banned)
+        for tracker in banned {
+            
+            guard let trackerUrl = URL(string: URL.appendScheme(path: tracker.url)),
+                let trackerHost = trackerUrl.host else {
+                    continue
+            }
+            
+            if isFirstParty(url, of: trackerUrl), urlHost.contains(trackerHost) {
+                return tracker
+            }
+        }
+        
+        return nil
+    }
+    
+    private func easylistTracker(forUrl url: URL, documentUrl: URL) -> Tracker? {
+        if abp.isBlockedIgnoringType(url.absoluteString, mainDocumentUrl: documentUrl.absoluteString) {
+            return Tracker(url: url.absoluteString, parentDomain: nil)
+        }
+        return nil
+    }
+    
     private func isFirstParty(_ childUrl: URL, of parentUrl: URL) -> Bool {
+        if childUrl.absoluteString.starts(with: "/"), !childUrl.absoluteString.starts(with: "//") {
+            return true
+        }
         return childUrl.baseDomain == parentUrl.baseDomain
     }
 

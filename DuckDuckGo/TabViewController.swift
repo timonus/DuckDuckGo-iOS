@@ -304,7 +304,6 @@ extension TabViewController: WKScriptMessageHandler {
     }
     
     private func handleBeforeLoad(message: WKScriptMessage) {
-        Logger.log(text: "\(MessageHandlerNames.beforeLoad) \(message.body)")
         guard let urlString = message.body as? String else { return }
         guard let url = URL(string: urlString) else { return }
         
