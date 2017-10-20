@@ -22,15 +22,18 @@ import Foundation
 public class TrackerDetector {
     
     private var configuration: ContentBlockerConfigurationStore
-
-    private var abp: ABPFilterLibWrapper
     
     private var disconnectTrackers: [Tracker]
+    
+    private var easylistFilter: ABPFilterLibWrapper
 
-    public init(configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults(), disconnectTrackers: [Tracker], abp: ABPFilterLibWrapper) {
+    private var easyprivacyFilter: ABPFilterLibWrapper
+
+    public init(configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults(), disconnectTrackers: [Tracker], easylistFilter: ABPFilterLibWrapper, easyprivacyFilter: ABPFilterLibWrapper) {
         self.configuration = configuration
         self.disconnectTrackers = disconnectTrackers
-        self.abp = abp
+        self.easylistFilter = easylistFilter
+        self.easyprivacyFilter = easyprivacyFilter
     }
         
     public func policy(forUrl url: URL, document documentUrl: URL) -> (tracker: Tracker?, block: Bool) {
@@ -57,7 +60,12 @@ public class TrackerDetector {
             return tracker
         }
         
-        if let tracker = easylistTracker(forUrl: url, documentUrl: documentUrl) {
+        if let tracker = abpTracker(forUrl: url, documentUrl: documentUrl, filter: easyprivacyFilter) {
+            Logger.log(items: "TrackerDetector detected EASYPRIVACY tracker", url.absoluteString)
+            return tracker
+        }
+        
+        if let tracker = abpTracker(forUrl: url, documentUrl: documentUrl, filter: easylistFilter) {
             Logger.log(items: "TrackerDetector detected EASYLIST tracker", url.absoluteString)
             return tracker
         }
@@ -87,8 +95,8 @@ public class TrackerDetector {
         return nil
     }
     
-    private func easylistTracker(forUrl url: URL, documentUrl: URL) -> Tracker? {
-        if abp.isBlockedIgnoringType(url.absoluteString, mainDocumentUrl: documentUrl.absoluteString) {
+    private func abpTracker(forUrl url: URL, documentUrl: URL, filter: ABPFilterLibWrapper) -> Tracker? {
+        if filter.isBlockedIgnoringType(url.absoluteString, mainDocumentUrl: documentUrl.absoluteString) {
             return Tracker(url: url.absoluteString, parentDomain: nil)
         }
         return nil

@@ -43,12 +43,18 @@ class TabManager {
     private var trackerDetector: TrackerDetector? {
         guard #available(iOSApplicationExtension 11.0, *) else { return nil }
         let trackers = Array(disconnectMeStore.trackers.values)
-        let abp = ABPFilterLibWrapper()
         let easylistStore = EasylistStore()
-        if let easylist = easylistStore.loadData(.easylist) {
-            abp.setDataFile(easylist)
+        let easylistFilter = filter(withData: easylistStore.loadData(.easylist))
+        let easyprivacyFilter = filter(withData: easylistStore.loadData(.easylist))
+        return TrackerDetector(disconnectTrackers: trackers, easylistFilter: easylistFilter, easyprivacyFilter: easyprivacyFilter)
+    }
+    
+    private func filter(withData data: Data?) ->  ABPFilterLibWrapper {
+        let filter = ABPFilterLibWrapper()
+        if let data = data {
+           filter.setDataFile(data)
         }
-        return TrackerDetector(disconnectTrackers: trackers, abp: abp)
+        return filter
     }
     
     private func buildController(forTab tab: Tab) -> TabViewController {

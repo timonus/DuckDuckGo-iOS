@@ -13,6 +13,7 @@
 		830C37631F6C482E00E317A7 /* TermsOfServiceListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C37621F6C482E00E317A7 /* TermsOfServiceListParser.swift */; };
 		830C37671F6C4A6200E317A7 /* TermsOfServiceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C37651F6C4A1D00E317A7 /* TermsOfServiceParserTests.swift */; };
 		833B46FF1F6CB7D4001ECFEC /* TermsOfServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */; };
+		834335B11F9A1DB300C1B28D /* easyprivacy.json in Resources */ = {isa = PBXBuildFile; fileRef = 834335B01F9A1DB300C1B28D /* easyprivacy.json */; };
 		835750951F8E9B170059E07B /* beforeload-notification.js in Resources */ = {isa = PBXBuildFile; fileRef = 835750941F8E9B160059E07B /* beforeload-notification.js */; };
 		8364F7101F95FA7600562989 /* DisconnectMeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */; };
 		8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */; };
@@ -40,7 +41,6 @@
 		8396326A1F98E0B500435FD2 /* HashSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839632541F98E0B500435FD2 /* HashSet.cpp */; };
 		8396326B1F98E0B500435FD2 /* HashSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 839632551F98E0B500435FD2 /* HashSet.h */; };
 		839632701F991CB100435FD2 /* easylist.json in Resources */ = {isa = PBXBuildFile; fileRef = 8396326E1F991CB000435FD2 /* easylist.json */; };
-		839632711F991CB100435FD2 /* easyprivacy.json in Resources */ = {isa = PBXBuildFile; fileRef = 8396326F1F991CB000435FD2 /* easyprivacy.json */; };
 		839632741F9966B000435FD2 /* AppleEasylistConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839632721F9965F900435FD2 /* AppleEasylistConversionTests.swift */; };
 		839825311F9579EE00AB1338 /* TrackerDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */; };
 		839F047D1F8E8BD000892CD6 /* AppleContentBlockerConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047C1F8E8BCF00892CD6 /* AppleContentBlockerConverter.swift */; };
@@ -346,6 +346,7 @@
 		830C37651F6C4A1D00E317A7 /* TermsOfServiceParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceParserTests.swift; sourceTree = "<group>"; };
 		8325A1201F68AFD900FF31B5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceTests.swift; sourceTree = "<group>"; };
+		834335B01F9A1DB300C1B28D /* easyprivacy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = easyprivacy.json; sourceTree = "<group>"; };
 		835750941F8E9B160059E07B /* beforeload-notification.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "beforeload-notification.js"; sourceTree = "<group>"; };
 		8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeStore.swift; sourceTree = "<group>"; };
 		8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeStoreTests.swift; sourceTree = "<group>"; };
@@ -376,7 +377,6 @@
 		839632541F98E0B500435FD2 /* HashSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HashSet.cpp; sourceTree = "<group>"; };
 		839632551F98E0B500435FD2 /* HashSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashSet.h; sourceTree = "<group>"; };
 		8396326E1F991CB000435FD2 /* easylist.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = easylist.json; sourceTree = "<group>"; };
-		8396326F1F991CB000435FD2 /* easyprivacy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = easyprivacy.json; sourceTree = "<group>"; };
 		839632721F9965F900435FD2 /* AppleEasylistConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleEasylistConversionTests.swift; sourceTree = "<group>"; };
 		8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDetectorTests.swift; sourceTree = "<group>"; };
 		839F047C1F8E8BCF00892CD6 /* AppleContentBlockerConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerConverter.swift; sourceTree = "<group>"; };
@@ -778,7 +778,7 @@
 				857065751F6ADCF70044DCB1 /* EasylistStore.swift */,
 				85F1C3C91F7A4E8000161346 /* ContentBlockerStringCache.swift */,
 				8396326E1F991CB000435FD2 /* easylist.json */,
-				8396326F1F991CB000435FD2 /* easyprivacy.json */,
+				834335B01F9A1DB300C1B28D /* easyprivacy.json */,
 			);
 			name = Store;
 			sourceTree = "<group>";
@@ -2029,7 +2029,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85BA79951F71B37100F59015 /* tlds.js in Resources */,
-				839632711F991CB100435FD2 /* easyprivacy.json in Resources */,
+				834335B11F9A1DB300C1B28D /* easyprivacy.json in Resources */,
 				85047B821F6827AD002A95D8 /* blockerdata.js in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
 				839632701F991CB100435FD2 /* easylist.json in Resources */,
