@@ -134,7 +134,7 @@ class MigrationTests: XCTestCase {
             
             XCTAssertEqual(1, self.bookmarksManager.count)
             
-            let link = self.self.bookmarksManager.bookmark(atIndex: 0)
+            let link = self.bookmarksManager.bookmark(atIndex: 0)
             XCTAssertEqual("example.com", link.title)
             XCTAssertEqual("http://www.example.com", link.url.absoluteString)
             XCTAssertNil(link.favicon)
@@ -164,7 +164,7 @@ class MigrationTests: XCTestCase {
 
             XCTAssertTrue(occurred)
             XCTAssertEqual(2, storiesMigrated)
-            XCTAssertEqual(2, self.self.bookmarksManager.count)
+            XCTAssertEqual(2, self.bookmarksManager.count)
             expectation.fulfill()
             
         }

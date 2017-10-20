@@ -307,7 +307,7 @@ extension MainViewController: BrowserChromeDelegate {
 
         if animated {
 
-            self.view.layer.removeAllAnimations()
+            view.layer.removeAllAnimations()
             UIView.animate(withDuration: ChromeAnimationConstants.duration) {
                 self.omniBar.alpha = hidden ? 0 : 1
                 self.toolbar.alpha = hidden ? 0 : 1
