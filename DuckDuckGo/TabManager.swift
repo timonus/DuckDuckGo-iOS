@@ -45,7 +45,7 @@ class TabManager {
         let trackers = Array(disconnectMeStore.trackers.values)
         let easylistStore = EasylistStore()
         let easylistFilter = filter(withData: easylistStore.loadData(.easylist))
-        let easyprivacyFilter = filter(withData: easylistStore.loadData(.easylist))
+        let easyprivacyFilter = filter(withData: easylistStore.loadData(.easylistPrivacy))
         return TrackerDetector(disconnectTrackers: trackers, easylistFilter: easylistFilter, easyprivacyFilter: easyprivacyFilter)
     }
     
