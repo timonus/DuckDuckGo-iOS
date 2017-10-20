@@ -60,16 +60,16 @@ public class TrackerDetector {
             return tracker
         }
         
+        if let tracker = abpTracker(forUrl: url, documentUrl: documentUrl, filter: easyprivacyFilter) {
+            Logger.log(items: "TrackerDetector detected EASYPRIVACY tracker", url.absoluteString)
+            return tracker
+        }
+        
         if let tracker = abpTracker(forUrl: url, documentUrl: documentUrl, filter: easylistFilter) {
             Logger.log(items: "TrackerDetector detected EASYLIST tracker", url.absoluteString)
             return tracker
         }
         
-        if let tracker = abpTracker(forUrl: url, documentUrl: documentUrl, filter: easyprivacyFilter) {
-            Logger.log(items: "TrackerDetector detected EASYPRIVACY tracker", url.absoluteString)
-            return tracker
-        }
- 
         return nil
     }
     
