@@ -24,8 +24,9 @@ import Core
 
 class TabViewController: WebViewController {
     
-    @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
-    
+    @IBOutlet weak var showBarsTapGestureRecogniser: UITapGestureRecognizer!
+    @IBOutlet weak var overlay: UIView!
+
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     
@@ -70,6 +71,7 @@ class TabViewController: WebViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addContentBlockerConfigurationObserver()
+        overlay.alpha = 0.0
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -397,6 +399,42 @@ extension TabViewController: WKScriptMessageHandler {
             NetworkLeaderboard.shared.network(named: networkName, detectedWhileVisitingDomain: browsingDomain)
         }
     }
+
+    private func showTutorial() {
+        if UIDevice.isPhone && !UIDevice.isPortrait { return }
+        guard let url = url, !appUrls.isDuckDuckGo(url: url) else { return }
+        guard let chromeDelegate = chromeDelegate else { return }
+
+        var settings = TutorialSettings()
+        if settings.shouldSeeFireButtonTutorial() {
+            showOverlay()
+            let point = Point(x: Int(chromeDelegate.fireButton.frame.size.width / 2), y: -20)
+            PopoverTutorialController.showTutorial(.fireButton, fromView: chromeDelegate.fireButton, atPoint: point, usingViewController: self) {
+                self.hideOverlay()
+            }
+            settings.hasSeenFireButtonTutorial = true
+        } else if settings.shouldSeePrivacyGradeTutorial() {
+            showOverlay()
+            PopoverTutorialController.showTutorial(.privacyGrade, fromView: chromeDelegate.omniBar.siteRatingView, usingViewController: self) {
+                self.hideOverlay()
+            }
+            settings.hasSeenPrivacyGradeTutorial = true
+        }
+
+    }
+
+    private func hideOverlay() {
+        UIView.animate(withDuration: 0.3) {
+            self.overlay.alpha = 0.0
+        }
+    }
+
+    private func showOverlay() {
+        UIView.animate(withDuration: 0.3) {
+            self.overlay.alpha = 1.0
+        }
+    }
+
 }
 
 extension TabViewController: WebEventsDelegate {
@@ -439,6 +477,10 @@ extension TabViewController: WebEventsDelegate {
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.showTutorial()
+        }
     }
     
     func webpageDidFailToLoad() {

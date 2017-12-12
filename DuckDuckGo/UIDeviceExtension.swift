@@ -21,9 +21,15 @@ import UIKit
 
 extension UIDevice {
 
-    class var isPhone : Bool {
+    class var isPhone: Bool {
         get {
-            return UIDevice().userInterfaceIdiom == .phone
+            return UIDevice.current.userInterfaceIdiom == .phone
+        }
+    }
+
+    class var isPortrait: Bool {
+        get {
+            return UIDevice.current.orientation.isPortrait
         }
     }
 

@@ -42,11 +42,11 @@ extension UIViewController {
         present(controller, animated: true, completion: nil)
     }
     
-    public func present(controller: UIViewController, fromView sourceView: UIView, atPoint point: Point? = nil) {
+    public func present(controller: UIViewController, fromView sourceView: UIView, atPoint point: Point? = nil, completion: (() -> Void)? = nil) {
         if let popover = controller.popoverPresentationController {
             popover.sourceView = sourceView
             popover.sourceRect = point != nil ? CGRect(x: point!.x, y: point!.y, width: 0, height: 0) : sourceView.bounds
         }
-        present(controller, animated: true, completion: nil)
+        present(controller, animated: true, completion: completion)
     }
 }

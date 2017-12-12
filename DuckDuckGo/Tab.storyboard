@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -53,9 +53,8 @@
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
-                                        <rect key="frame" x="38" y="288" width="299" height="224"/>
-                                        <mutableString key="text">The certificate for this server is invalid.  You might be connecting to a server that is pretending to be "m.allmenus.com" which could put your confidential information at risk.  The certificate for this server is invalid.  You might be connecting to a server that is pretending to be "m.allmenus.com" which could put your confidential information at risk. The certificate for this server is invalid.  You might be connecting to a server that is pretending to be "m.allmenus.com" which could put your confidential information at risk. The certificate for this server is invalid.  You might be connecting to a server that is pretending to be "m.allmenus.com" which could put your confidential information at risk.</mutableString>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error message text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
+                                        <rect key="frame" x="38" y="288" width="299" height="16"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                         <color key="textColor" red="0.74117647058823533" green="0.74117647058823533" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -72,17 +71,25 @@
                                     <constraint firstItem="6P7-7R-riV" firstAttribute="top" secondItem="TUO-E3-s7Q" secondAttribute="bottom" constant="33" id="wm5-Yr-sWj"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5wp-1o-3BS">
+                                <rect key="frame" x="-0.5" y="10" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.18823529411764706" green="0.25098039215686274" blue="0.26666666666666666" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.24313725489999999" green="0.25098039220000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="t0t-53-xVf" firstAttribute="trailing" secondItem="cf7-Ja-fUU" secondAttribute="trailing" id="2jX-5z-Ssu"/>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="width" secondItem="Sgm-Wo-lho" secondAttribute="width" id="5OD-OG-z3h"/>
+                            <constraint firstItem="5wp-1o-3BS" firstAttribute="centerX" secondItem="t0t-53-xVf" secondAttribute="centerX" id="9tP-F0-Exy"/>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="centerX" secondItem="t0t-53-xVf" secondAttribute="centerX" id="K0j-Jv-Jf9"/>
+                            <constraint firstItem="5wp-1o-3BS" firstAttribute="centerY" secondItem="t0t-53-xVf" secondAttribute="centerY" id="NaH-Vq-GfP"/>
                             <constraint firstItem="cf7-Ja-fUU" firstAttribute="leading" secondItem="t0t-53-xVf" secondAttribute="leading" id="Vfx-ef-Qp5"/>
                             <constraint firstItem="ypz-s2-KJB" firstAttribute="top" secondItem="cfL-5d-Vrt" secondAttribute="bottom" constant="-80" id="Zyh-vQ-fMz"/>
                             <constraint firstAttribute="trailing" secondItem="ypz-s2-KJB" secondAttribute="trailing" id="bXU-Fx-c7D"/>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="top" secondItem="t0t-53-xVf" secondAttribute="top" id="d1G-AJ-ASk"/>
+                            <constraint firstItem="5wp-1o-3BS" firstAttribute="height" secondItem="Sgm-Wo-lho" secondAttribute="height" id="f3t-vO-sEm"/>
+                            <constraint firstItem="5wp-1o-3BS" firstAttribute="width" secondItem="Sgm-Wo-lho" secondAttribute="width" id="f5m-pv-DJ3"/>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="height" secondItem="Sgm-Wo-lho" secondAttribute="height" id="i7n-ek-99Q"/>
                             <constraint firstItem="ypz-s2-KJB" firstAttribute="leading" secondItem="Sgm-Wo-lho" secondAttribute="leading" id="ugB-DM-Oye"/>
                             <constraint firstItem="cf7-Ja-fUU" firstAttribute="top" secondItem="ypz-s2-KJB" secondAttribute="bottom" id="xwr-1D-cel"/>
@@ -100,6 +107,7 @@
                     <connections>
                         <outlet property="error" destination="Kd4-Oi-JP2" id="zBn-cG-pfQ"/>
                         <outlet property="errorMessage" destination="Cjw-mk-QL3" id="b1N-1W-IGs"/>
+                        <outlet property="overlay" destination="5wp-1o-3BS" id="cha-8j-skb"/>
                         <outlet property="progressBar" destination="cf7-Ja-fUU" id="3z8-Dr-WFy"/>
                         <outlet property="showBarsTapGestureRecogniser" destination="Y72-bH-DMy" id="SAY-KX-OEJ"/>
                         <segue destination="5Os-y0-IaV" kind="show" identifier="PrivacyProtection" id="nKl-8K-k03"/>

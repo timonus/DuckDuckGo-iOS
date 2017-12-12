@@ -23,9 +23,12 @@ class FireButton: UIView, NibLoading {
 
     typealias OnCilckHandler = () -> Void
 
+    var tutorialSettings = TutorialSettings()
+
     var onClickHandler: OnCilckHandler!
 
     @IBAction func onClick() {
+        tutorialSettings.fireButtonUsageCount += 1
         onClickHandler()
     }
 

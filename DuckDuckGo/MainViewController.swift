@@ -32,7 +32,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
     @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
 
-    weak var fireButton: UIView!
+    private(set) weak var fireButton: FireButton!
     var omniBar: OmniBar!
     var chromeManager: BrowserChromeManager!
 
@@ -342,6 +342,10 @@ extension MainViewController: BrowserChromeDelegate {
     var toolbarHeight: CGFloat {
         get { return toolbar.frame.size.height }
     }
+
+//    var fireButton: FireButton! {
+//        get { return _fireButton }
+//    }
 
     private func updateToolbarConstant(_ hidden: Bool) {
         var bottomHeight = self.toolbar.frame.size.height

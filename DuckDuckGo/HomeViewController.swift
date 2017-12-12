@@ -36,6 +36,7 @@ class HomeViewController: UIViewController {
     
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
+
     private var active = false
     
     static func loadFromStoryboard(active: Bool) -> HomeViewController {
@@ -43,7 +44,7 @@ class HomeViewController: UIViewController {
         controller.active = active
         return controller
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if active {
@@ -52,11 +53,11 @@ class HomeViewController: UIViewController {
             enterPassiveMode()
         }
     }
-    
+
     @IBAction func onEnterActiveModeTapped(_ sender: Any) {
          enterActiveModeAnimated()
     }
-    
+
     private func enterActiveModeAnimated() {
         UIView.animate(withDuration: Constants.animationDuration, animations: {
             self.moveSearchBarUp()
@@ -90,7 +91,7 @@ class HomeViewController: UIViewController {
         passiveContent.isHidden = false
         delegate?.homeDidDeactivateOmniBar(home: self)
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     }
     
@@ -135,3 +136,7 @@ class HomeViewController: UIViewController {
         view.removeFromSuperview()
     }
 }
+
+
+
+

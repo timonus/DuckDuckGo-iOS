@@ -26,6 +26,7 @@ protocol BrowserChromeDelegate: class {
     var isToolbarHidden: Bool { get }
     var omniBar: OmniBar! { get }
     var toolbarHeight: CGFloat { get }
+    var fireButton: FireButton! { get }
 
 }
 

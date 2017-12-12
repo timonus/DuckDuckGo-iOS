@@ -143,6 +143,9 @@
                         <outlet property="searchBarContent" destination="sH7-xn-wYA" id="zsQ-ly-5LA"/>
                         <outlet property="searchImage" destination="GHd-JT-J5r" id="FK0-Oe-eR3"/>
                         <outlet property="searchText" destination="HWx-8c-7xM" id="aVn-da-jBf"/>
+                        <segue destination="Gfp-nM-JQH" kind="popoverPresentation" identifier="FireButtonTutorial" popoverAnchorView="HWx-8c-7xM" id="yJ3-Dy-Kn5">
+                            <popoverArrowDirection key="popoverArrowDirection" down="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vtg-6j-Bq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -167,6 +170,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vyZ-o3-1D5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1798" y="-450"/>
+        </scene>
+        <!--FireButton-->
+        <scene sceneID="3yD-jQ-9Ri">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PopoverTutorials" referencedIdentifier="FireButton" id="Gfp-nM-JQH" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xzu-TJ-pf3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1808" y="-201"/>
         </scene>
     </scenes>
     <resources>

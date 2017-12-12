@@ -31,6 +31,10 @@
 		850819D81FDDBCDC006561FD /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850819D71FDDBCDC006561FD /* UIDeviceExtension.swift */; };
 		850819DB1FDDE176006561FD /* SettingsTutorials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 850819DA1FDDE176006561FD /* SettingsTutorials.storyboard */; };
 		850819DD1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 850819DC1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets */; };
+		850819E21FDDE8F5006561FD /* PopoverTutorials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 850819E11FDDE8F5006561FD /* PopoverTutorials.storyboard */; };
+		850819E41FDDEAF5006561FD /* PopoverTutorialAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 850819E31FDDEAF5006561FD /* PopoverTutorialAssets.xcassets */; };
+		850819E61FDDF35F006561FD /* PopoverTutorialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850819E51FDDF35F006561FD /* PopoverTutorialController.swift */; };
+		85081A011FDF139F006561FD /* TutorialSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85081A001FDF139F006561FD /* TutorialSettingsTests.swift */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
 		85200F931FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */; };
 		85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */; };
@@ -382,6 +386,10 @@
 		850819D71FDDBCDC006561FD /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		850819DA1FDDE176006561FD /* SettingsTutorials.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsTutorials.storyboard; sourceTree = "<group>"; };
 		850819DC1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SettingsTutorialAssets.xcassets; sourceTree = "<group>"; };
+		850819E11FDDE8F5006561FD /* PopoverTutorials.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PopoverTutorials.storyboard; sourceTree = "<group>"; };
+		850819E31FDDEAF5006561FD /* PopoverTutorialAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PopoverTutorialAssets.xcassets; sourceTree = "<group>"; };
+		850819E51FDDF35F006561FD /* PopoverTutorialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverTutorialController.swift; sourceTree = "<group>"; };
+		85081A001FDF139F006561FD /* TutorialSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSettingsTests.swift; sourceTree = "<group>"; };
 		85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionScoreCardController.swift; sourceTree = "<group>"; };
 		85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionHeaderController.swift; sourceTree = "<group>"; };
 		85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtectionHeader.storyboard; sourceTree = "<group>"; };
@@ -916,6 +924,24 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		850819E01FDDE8D7006561FD /* Popovers */ = {
+			isa = PBXGroup;
+			children = (
+				850819E11FDDE8F5006561FD /* PopoverTutorials.storyboard */,
+				850819E31FDDEAF5006561FD /* PopoverTutorialAssets.xcassets */,
+				850819E51FDDF35F006561FD /* PopoverTutorialController.swift */,
+			);
+			name = Popovers;
+			sourceTree = "<group>";
+		};
+		850819FF1FDF1381006561FD /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				85081A001FDF139F006561FD /* TutorialSettingsTests.swift */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
 		85200F9B1FBC59FF001AF290 /* NetworkLeaderboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1147,6 +1173,7 @@
 			isa = PBXGroup;
 			children = (
 				F1BE54481E69DD5F00FCF649 /* Onboarding */,
+				850819E01FDDE8D7006561FD /* Popovers */,
 				850819D91FDDE127006561FD /* Settings */,
 				F186421A1E94A3F900B2A911 /* Support */,
 			);
@@ -1185,6 +1212,7 @@
 		F12790DD1EBBDDF3001D3AEC /* Tutorials */ = {
 			isa = PBXGroup;
 			children = (
+				850819FF1FDF1381006561FD /* Support */,
 				F12790EC1EBBEDBB001D3AEC /* Onboarding */,
 			);
 			name = Tutorials;
@@ -2038,6 +2066,7 @@
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
 				85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */,
+				850819E21FDDE8F5006561FD /* PopoverTutorials.storyboard in Resources */,
 				850819DD1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
 				F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */,
@@ -2047,6 +2076,7 @@
 				8563A0351F8E369400F04442 /* Home.storyboard in Resources */,
 				850819DB1FDDE176006561FD /* SettingsTutorials.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
+				850819E41FDDEAF5006561FD /* PopoverTutorialAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2252,6 +2282,7 @@
 				F16390821E648B7A005B4550 /* HomeViewController.swift in Sources */,
 				85BA585A1F3506AE00C6E8CA /* AppSettings.swift in Sources */,
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,
+				850819E61FDDF35F006561FD /* PopoverTutorialController.swift in Sources */,
 				85200F931FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */,
@@ -2265,6 +2296,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85081A011FDF139F006561FD /* TutorialSettingsTests.swift in Sources */,
 				85C271CF1FCDB869007216B4 /* MajorTrackerNetworkTests.swift in Sources */,
 				85200F9A1FBBC012001AF290 /* NetworkLeaderboardTests.swift in Sources */,
 				85F1C3CD1F7A76EF00161346 /* ContentBlockerStringCache.swift in Sources */,

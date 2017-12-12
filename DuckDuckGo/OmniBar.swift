@@ -33,6 +33,8 @@ class OmniBar: UIView {
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
 
+    var tutorialSettings = TutorialSettings()
+
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = HomeEmptyEditingState()    
     private lazy var appUrls: AppUrls = AppUrls()
@@ -158,6 +160,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onSiteRatingPressed(_ sender: Any) {
+        tutorialSettings.privacyGradeUsageCount += 1
         omniDelegate?.onSiteRatingPressed()
     }
     
