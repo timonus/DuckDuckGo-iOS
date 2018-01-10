@@ -29,15 +29,27 @@ public protocol HTTPSUpgradePersistence {
 
 }
 
+// https://stackoverflow.com/questions/45922314/why-xcode-9-beta-does-not-show-index-options-for-coredata-entities-and-attribute
+// https://developer.apple.com/videos/play/wwdc2017/210/
+
 public class CoreDataHTTPSUpgradePersistence: HTTPSUpgradePersistence {
 
     let container = DDGPersistenceContainer(name: "HTTPSUpgrade")!
 
+    var domains = [String]()
+    
     public init() {
+        
+        
+        
     }
 
     public func persist(domains: [String], wildcardDomains: [String]) {
+        let start = Date()
+        print("***", "persisting domains", domains.count, wildcardDomains.count)
+        
         deleteAll()
+        self.domains.removeAll()
 
         for simpleDomain in domains {
             let entityName = String(describing: HTTPSUpgradeSimpleDomain.self)
@@ -55,6 +67,8 @@ public class CoreDataHTTPSUpgradePersistence: HTTPSUpgradePersistence {
         }
 
         _ = container.save()
+        
+        print("***", "persisting domains DONE", Date().timeIntervalSince(start))
     }
 
     public func hasWildcardDomain(_ domain: String) -> Bool {
@@ -67,7 +81,7 @@ public class CoreDataHTTPSUpgradePersistence: HTTPSUpgradePersistence {
 
     public func hasSimpleDomain(_ domain: String) -> Bool {
         let request:NSFetchRequest<HTTPSUpgradeSimpleDomain> = HTTPSUpgradeSimpleDomain.fetchRequest()
-        request.predicate = NSPredicate(format: "domain like %@", domain)
+        request.predicate = NSPredicate(format: "domain = %@", domain)
         guard let count = try? container.managedObjectContext.count(for: request) else { return false }
         return count > 0
     }

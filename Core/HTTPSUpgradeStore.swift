@@ -29,6 +29,7 @@ public class HTTPSUpgradeStore {
 
     func persist(data: Data) {
         guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
+//        guard let top500 = jsonObject as? [String] else { return }
         guard let jsonDict = jsonObject as? [String: Any] else { return }
         guard let simpleUpgrade = jsonDict["simpleUpgrade"] as? [String: Any] else { return }
         guard let top500 = simpleUpgrade["top500"] as? [String] else { return }
