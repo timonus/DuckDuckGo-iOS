@@ -39,9 +39,6 @@ public class CoreDataHTTPSUpgradePersistence: HTTPSUpgradePersistence {
     var domains = [String]()
     
     public init() {
-        
-        
-        
     }
 
     public func persist(domains: [String], wildcardDomains: [String]) {
@@ -81,7 +78,7 @@ public class CoreDataHTTPSUpgradePersistence: HTTPSUpgradePersistence {
 
     public func hasSimpleDomain(_ domain: String) -> Bool {
         let request:NSFetchRequest<HTTPSUpgradeSimpleDomain> = HTTPSUpgradeSimpleDomain.fetchRequest()
-        request.predicate = NSPredicate(format: "domain = %@", domain)
+        request.predicate = NSPredicate(format: "domain like %@", domain)
         guard let count = try? container.managedObjectContext.count(for: request) else { return false }
         return count > 0
     }

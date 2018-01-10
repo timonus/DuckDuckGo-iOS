@@ -29,13 +29,20 @@ public class HTTPSUpgradeStore {
 
     func persist(data: Data) {
         guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
-//        guard let top500 = jsonObject as? [String] else { return }
         guard let jsonDict = jsonObject as? [String: Any] else { return }
         guard let simpleUpgrade = jsonDict["simpleUpgrade"] as? [String: Any] else { return }
         guard let top500 = simpleUpgrade["top500"] as? [String] else { return }
         let domains = top500.filter( { !$0.starts(with: "*.") } )
         let wildcardDomains = top500.filter( { $0.starts(with: "*." ) } )
         persistence.persist(domains: domains, wildcardDomains: wildcardDomains)
+    }
+    
+    func loadFromDisk() {
+        guard let fileUrl = Bundle(for: CoreDataHTTPSUpgradePersistence.self).url(forResource: "click-domains", withExtension: "txt") else { return }
+        guard let domainList = try? String(contentsOf: fileUrl) else { return }
+        let allDomains = domainList.components(separatedBy: .whitespacesAndNewlines)
+        let domains200k = Array<String>(allDomains[0 ..< 200000])
+        persistence.persist(domains: domains200k, wildcardDomains: [])
     }
 
 }

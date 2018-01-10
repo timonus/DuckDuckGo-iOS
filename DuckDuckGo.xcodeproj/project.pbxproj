@@ -68,7 +68,7 @@
 		85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */; };
 		859872241F5743D800041CB8 /* FireAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 859872231F5743D800041CB8 /* FireAnimation.xib */; };
 		859B273B200681B50023F308 /* HTTPSUprgadePerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B2739200681470023F308 /* HTTPSUprgadePerformanceTests.swift */; };
-		859B273D200684800023F308 /* click-domains.txt in Resources */ = {isa = PBXBuildFile; fileRef = 859B273C200684800023F308 /* click-domains.txt */; };
+		859B273E2006ADD90023F308 /* click-domains.txt in Resources */ = {isa = PBXBuildFile; fileRef = 859B273C200684800023F308 /* click-domains.txt */; };
 		85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */; };
 		85B5470A1FE852CE0008E1E5 /* bloom-filter-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */; };
 		85B5470B1FE852CE0008E1E5 /* abp-filter-parser-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */; };
@@ -423,7 +423,7 @@
 		85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionTrackerNetworksTests.swift; sourceTree = "<group>"; };
 		859872231F5743D800041CB8 /* FireAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FireAnimation.xib; sourceTree = "<group>"; };
 		859B2739200681470023F308 /* HTTPSUprgadePerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUprgadePerformanceTests.swift; sourceTree = "<group>"; };
-		859B273C200684800023F308 /* click-domains.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "click-domains.txt"; sourceTree = "<group>"; };
+		859B273C200684800023F308 /* click-domains.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "click-domains.txt"; path = "../DuckDuckGoTests/click-domains.txt"; sourceTree = "<group>"; };
 		85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtection.storyboard; sourceTree = "<group>"; };
 		85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "bloom-filter-packed.js"; path = "submodules/ios-js-support/src/bloom-filter-packed.js"; sourceTree = SOURCE_ROOT; };
 		85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "abp-filter-parser-packed.js"; path = "submodules/ios-js-support/src/abp-filter-parser-packed.js"; sourceTree = SOURCE_ROOT; };
@@ -1023,6 +1023,7 @@
 		85C271D41FD02CB8007216B4 /* HTTPSUpgrade */ = {
 			isa = PBXGroup;
 			children = (
+				859B273C200684800023F308 /* click-domains.txt */,
 				85C271DC1FD04459007216B4 /* HTTPSUpgrade.swift */,
 				85C271DE1FD044D7007216B4 /* HTTPSUpgradePersistence.swift */,
 				85C271D71FD0311A007216B4 /* HTTPSUpgradeStore.swift */,
@@ -1034,7 +1035,6 @@
 		85C271D91FD03647007216B4 /* HTTPSUpgrade */ = {
 			isa = PBXGroup;
 			children = (
-				859B273C200684800023F308 /* click-domains.txt */,
 				85C271DA1FD0366F007216B4 /* HTTPSUpgradeTests.swift */,
 				85C271E31FD04ACD007216B4 /* HTTPSUpgradeStoreTests.swift */,
 				85C271E51FD065D8007216B4 /* CoreDataHTTPSUpgradePersistenceTests.swift */,
@@ -2073,7 +2073,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				85F1E9C11FB7D19A00A75AC1 /* ddgissuercert.der in Resources */,
-				859B273D200684800023F308 /* click-domains.txt in Resources */,
 				85F1E9BB1FB7D06300A75AC1 /* ddgcert.der in Resources */,
 				85F1E9B91FB7CB7100A75AC1 /* testcert.der in Resources */,
 				F17843E91F36226700390DCD /* MockJson in Resources */,
@@ -2091,6 +2090,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				859B273E2006ADD90023F308 /* click-domains.txt in Resources */,
 				85BA79951F71B37100F59015 /* tlds.js in Resources */,
 				85047B821F6827AD002A95D8 /* blockerdata.js in Resources */,
 				85B5470C1FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js in Resources */,

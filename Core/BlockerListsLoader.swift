@@ -93,6 +93,8 @@ public class BlockerListsLoader {
             if let data = data {
                 self.newDataItems += 1
                 self.httpsUpgradeStore.persist(data: data)
+            } else {
+                self.httpsUpgradeStore.loadFromDisk()
             }
             semaphore.signal()
         }

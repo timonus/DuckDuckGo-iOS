@@ -53,7 +53,7 @@ class HTTPSUpgradePerformanceTests: XCTestCase {
     }
     
     private func ingest(_ count: Int) -> [String] {
-        guard let fileUrl = Bundle(for: HTTPSUpgradePerformanceTests.self).url(forResource: "click-domains", withExtension: "txt") else { return [] }
+        guard let fileUrl = Bundle(for: CoreDataHTTPSUpgradePersistence.self).url(forResource: "click-domains", withExtension: "txt") else { return [] }
         print("***", fileUrl)
         
         guard let fileData = try? String(contentsOf: fileUrl) else {
