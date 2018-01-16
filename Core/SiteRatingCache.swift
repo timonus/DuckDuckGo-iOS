@@ -22,35 +22,66 @@ import Foundation
 
 public class SiteRatingCache {
     
+    public struct CacheEntry {
+        
+        public let score: Int
+        public let uniqueTrackerNetworksDetected: Int
+        public let uniqueTrackerNetworksBlocked: Int
+        public let uniqueMajorTrackerNetworksDetected: Int
+        public let uniqueMajorTrackerNetworksBlocked: Int
+        public let hasOnlySecureContent: Bool
+
+        func copy(hasOnlySecureContent: Bool? = nil) -> CacheEntry {
+            
+            return CacheEntry(score: score,
+                              uniqueTrackerNetworksDetected: uniqueTrackerNetworksDetected,
+                              uniqueTrackerNetworksBlocked: uniqueMajorTrackerNetworksBlocked,
+                              uniqueMajorTrackerNetworksDetected: uniqueMajorTrackerNetworksDetected,
+                              uniqueMajorTrackerNetworksBlocked: uniqueMajorTrackerNetworksBlocked,
+                              hasOnlySecureContent: hasOnlySecureContent ?? self.hasOnlySecureContent)
+            
+        }
+        
+    }
+    
     public static let shared = SiteRatingCache()
     
-    private var cachedScores = [String: Int]()
+    private var cache = [String: CacheEntry]()
     
     /**
      Adds a score to the cache. Only replaces a preexisting score if
      the new score is higher
      - returns: true if the cache was updated, otherwise false
      */
-    func add(url: URL, score: Int) -> Bool {
-        return compareAndSet(url: url, score: score)
+    func add(url: URL, entry: CacheEntry) -> Bool {
+        return compareAndSet(url, entry)
+    }
+
+    /**
+     Explicitly update an entry for the given the url.
+     */
+    func update(url: URL, with entry: CacheEntry) {
+        let key = cacheKey(forUrl: url)
+        cache[key] = entry
     }
     
-    private func compareAndSet(url: URL, score current: Int) -> Bool {
+    private func compareAndSet(_ url: URL, _ entry: CacheEntry) -> Bool {
         let key = cacheKey(forUrl: url)
-        if let previous = cachedScores[key], previous > current {
+        if let previous = cache[key], previous.score > entry.score {
+            print("***", entry)
             return false
         }
-        cachedScores[key] = current
+        cache[key] = entry
         return true
     }
     
-    func get(url: URL) -> Int? {
+    public func get(url: URL) -> CacheEntry? {
         let key = cacheKey(forUrl: url)
-        return cachedScores[key]
+        return cache[key]
     }
     
     func reset() {
-        cachedScores =  [String: Int]()
+        cache =  [String: CacheEntry]()
     }
     
     private func cacheKey(forUrl url: URL) -> String {

@@ -25,8 +25,12 @@ public class SiteRating {
     public let protectionId: String
     public var url: URL
     
-    public var hasOnlySecureContent: Bool {
+    public var hasOnlySecureContent: Bool = true {
         didSet {
+            let cache = SiteRatingCache.shared
+            if let cacheEntry = cache.get(url: url) {
+                cache.update(url: url, with: cacheEntry.copy(hasOnlySecureContent: hasOnlySecureContent))
+            }
             recalculateGrade()
         }
     }
@@ -56,9 +60,9 @@ public class SiteRating {
         
         let cache = SiteRatingCache.shared
         
-        if let beforeScore = cache.get(url: url) {
-            afterGrade = SiteGrade.a
-            beforeGrade = SiteGrade.grade(fromScore: beforeScore)
+        if let entry = cache.get(url: url) {
+            afterGrade = SiteGrade.grade(fromScore: siteScore().after)
+            beforeGrade = SiteGrade.grade(fromScore: entry.score)
         } else {
             recalculateGrade()
         }
@@ -181,7 +185,16 @@ public class SiteRating {
     
     private func recalculateGrade() {
         let score = siteScore()
-        _ = SiteRatingCache.shared.add(url: url, score: score.before)
+        
+        let entry = SiteRatingCache.CacheEntry(score: score.before,
+                                               uniqueTrackerNetworksDetected: uniqueTrackersDetected,
+                                               uniqueTrackerNetworksBlocked: uniqueTrackersBlocked,
+                                               uniqueMajorTrackerNetworksDetected: uniqueMajorTrackerNetworksDetected,
+                                               uniqueMajorTrackerNetworksBlocked: uniqueMajorTrackerNetworksDetected,
+                                               hasOnlySecureContent: hasOnlySecureContent)
+        
+        _ = SiteRatingCache.shared.add(url: url, entry: entry)
+        
         afterGrade = SiteGrade.grade(fromScore: score.after)
         beforeGrade = SiteGrade.grade(fromScore: score.before)
     }

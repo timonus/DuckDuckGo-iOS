@@ -31,6 +31,10 @@ class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {
         static let pageURL = URL(string: "https://example.com")!
 
     }
+    
+    override func setUp() {
+        SiteRatingCache.shared.reset()
+    }
 
     func testMultipleMajorNetworksBlockedReturnsPluralText() {
         let rating = SiteRating(url: Constants.pageURL, disconnectMeTrackers: [: ], termsOfServiceStore: MockTermsOfServiceStore(), majorTrackerNetworkStore: MockMajorTrackerNetworkStore())

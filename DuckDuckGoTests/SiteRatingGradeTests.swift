@@ -80,7 +80,9 @@ class SiteRatingGradeTests: XCTestCase {
     }
     
     func testWhenHighScoreCachedThenBeforeGradeIsD() {
-        _ = SiteRatingCache.shared.add(url: Url.https, score: 10)
+        let entry = SiteRatingCache.CacheEntry(score: 10, uniqueTrackerNetworksDetected: 0, uniqueTrackerNetworksBlocked: 0, uniqueMajorTrackerNetworksDetected: 0, uniqueMajorTrackerNetworksBlocked: 0, hasOnlySecureContent: true)
+        
+        _ = SiteRatingCache.shared.add(url: Url.https, entry: entry)
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore())
         let before = testee.beforeGrade
         XCTAssertEqual(SiteGrade.d, before)

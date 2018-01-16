@@ -29,10 +29,14 @@ extension SiteRating {
         .poor: UserText.privacyProtectionTOSPoor
     ]
 
+    private var cacheEntry: SiteRatingCache.CacheEntry? {
+        return SiteRatingCache.shared.get(url: url)
+    }
+    
     func encryptedConnectionText() -> String {
         if !https {
             return UserText.privacyProtectionEncryptionBadConnection
-        } else if !hasOnlySecureContent {
+        } else if let hasOnlySecureContent = cacheEntry?.hasOnlySecureContent, !hasOnlySecureContent {
             return UserText.privacyProtectionEncryptionMixedConnection
         } else {
             return UserText.privacyProtectionEncryptionGoodConnection
@@ -57,15 +61,15 @@ extension SiteRating {
     }
 
     func majorNetworksSuccess(contentBlocker: ContentBlockerConfigurationStore) -> Bool {
-        return (protecting(contentBlocker) ? uniqueMajorTrackerNetworksBlocked : uniqueMajorTrackerNetworksDetected) <= 0
+        return (protecting(contentBlocker) ? cacheEntry?.uniqueMajorTrackerNetworksBlocked ?? 0 : cacheEntry?.uniqueMajorTrackerNetworksDetected ?? 0) <= 0
     }
 
     func majorNetworksBlockedText() -> String {
-        return String(format: UserText.privacyProtectionMajorTrackersBlocked, uniqueMajorTrackerNetworksBlocked)
+        return String(format: UserText.privacyProtectionMajorTrackersBlocked, cacheEntry?.uniqueMajorTrackerNetworksBlocked ?? 0)
     }
 
     func majorNetworksDetectedText() -> String {
-        return String(format: UserText.privacyProtectionMajorTrackersFound, uniqueMajorTrackerNetworksDetected)
+        return String(format: UserText.privacyProtectionMajorTrackersFound, cacheEntry?.uniqueMajorTrackerNetworksDetected ?? 0)
     }
 
     func networksText(contentBlocker: ContentBlockerConfigurationStore) -> String {
@@ -73,15 +77,15 @@ extension SiteRating {
     }
 
     func networksSuccess(contentBlocker: ContentBlockerConfigurationStore) -> Bool {
-        return (protecting(contentBlocker) ? uniqueTrackerNetworksBlocked : uniqueTrackerNetworksDetected) <= 0
+        return (protecting(contentBlocker) ? cacheEntry?.uniqueTrackerNetworksBlocked ?? 0 : cacheEntry?.uniqueTrackerNetworksDetected ?? 0) <= 0
     }
 
     func networksBlockedText() -> String {
-        return String(format: UserText.privacyProtectionTrackersBlocked, uniqueTrackerNetworksBlocked)
+        return String(format: UserText.privacyProtectionTrackersBlocked, cacheEntry?.uniqueTrackerNetworksBlocked ?? 0)
     }
 
     func networksDetectedText() -> String {
-        return String(format: UserText.privacyProtectionTrackersFound, uniqueTrackerNetworksDetected)
+        return String(format: UserText.privacyProtectionTrackersFound, cacheEntry?.uniqueTrackerNetworksDetected ?? 0)
     }
 
     func protecting(_ contentBlocker: ContentBlockerConfigurationStore) -> Bool {
