@@ -125,6 +125,14 @@ class TabViewController: WebViewController {
         }
     }
     
+    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        guard let url = webView.url else { return }
+        
+        siteRating = SiteRating(url: url)
+        reloadScripts(with: siteRating!.protectionId)
+        updateSiteRating()
+    }
+    
     private func resetNavigationBar() {
         chromeDelegate?.setBarsHidden(false, animated: false)
     }
@@ -483,6 +491,7 @@ extension TabViewController: WebEventsDelegate {
     }
 
     func webView(_ webView: WKWebView, didUpdateHasOnlySecureContent hasOnlySecureContent: Bool) {
+        guard webView.url?.host == siteRating?.url.host else { return }        
         siteRating?.hasOnlySecureContent = hasOnlySecureContent
         updateSiteRating()
     }
