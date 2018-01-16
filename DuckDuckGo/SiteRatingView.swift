@@ -71,8 +71,8 @@ public class SiteRatingView: UIView {
         guard BlockerListsLoader().hasData else { return }
         guard let siteRating = siteRating else { return }
         
-        let grades = siteRating.siteGrade()
-        let grade = contentBlockerConfiguration.protecting(domain: siteRating.domain) ? grades.after : grades.before
+//        let grades = siteRating.siteGrade()
+        let grade = contentBlockerConfiguration.protecting(domain: siteRating.domain) ? siteRating.afterGrade : siteRating.beforeGrade
         circleIndicator.image = SiteRatingView.gradeImages[grade]
     }
 

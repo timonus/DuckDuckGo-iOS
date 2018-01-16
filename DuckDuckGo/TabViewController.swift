@@ -103,8 +103,13 @@ class TabViewController: WebViewController {
     }
 
     override func goBack() {
-        resetSiteRating()
+        siteRating = nil
         super.goBack()
+    }
+    
+    override func goForward() {
+        siteRating = nil
+        super.goForward()
     }
 
     private func addContentBlockerConfigurationObserver() {

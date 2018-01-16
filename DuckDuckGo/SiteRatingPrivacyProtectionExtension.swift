@@ -97,12 +97,8 @@ extension SiteRating {
     ]
 
     func siteGradeImages() -> (from: UIImage, to: UIImage) {
-        let grades = siteGrade()
-
-        let fromGrade = grades.before
-        let toGrade = grades.after
-
-        return (SiteRating.gradeImages[fromGrade]!, SiteRating.gradeImages[toGrade]!)
+        
+        return (SiteRating.gradeImages[beforeGrade]!, SiteRating.gradeImages[afterGrade]!)
     }
 
 }

@@ -52,9 +52,9 @@ class PrivacyProtectionHeaderController: UIViewController {
     private func update() {
         guard isViewLoaded else { return }
 
-        let grades = siteRating.siteGrade()
+        // let grades = siteRating.siteGrade()
         let protecting = contentBlocker.protecting(domain: siteRating.domain)
-        let grade =  protecting ? grades.after : grades.before
+        let grade = protecting ? siteRating.afterGrade : siteRating.beforeGrade
         gradeImage.image = protecting ? PrivacyProtectionHeaderController.gradesOn[grade] : PrivacyProtectionHeaderController.gradesOff[grade]
 
         siteTitleLabel.text = siteRating.domain
