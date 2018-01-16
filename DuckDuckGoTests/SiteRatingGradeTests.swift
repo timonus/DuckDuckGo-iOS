@@ -21,7 +21,7 @@
 import XCTest
 @testable import Core
 
-class SiteRatingScoreExtensionTests: XCTestCase {
+class SiteRatingGradeTests: XCTestCase {
 
     struct Url {
         static let http = URL(string: "http://example.com")!
@@ -79,144 +79,113 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual("Social", nameAndCategory.category)
     }
     
-    func testWhenHighScoreCachedResultIsGradeD() {
+    func testWhenHighScoreCachedThenBeforeGradeIsD() {
         _ = SiteRatingCache.shared.add(url: Url.https, score: 10)
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore())
-        let before = testee.siteGrade().before
+        let before = testee.beforeGrade
         XCTAssertEqual(SiteGrade.d, before)
     }
 
-    func testWhenWorseScoreIsCachedForBeforeScoreItIsUsed() {
-        _ = SiteRatingCache.shared.add(url: Url.https, score: 10)
-
-        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore())
-        let score = testee.siteScore()
-        XCTAssertEqual(10, score.before)
-        XCTAssertEqual(1, score.after)
-    }
-
-    func testBeforeScoreIsCached() {
-        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .e, score: 0))
-        XCTAssertNotNil(testee.siteScore())
-        XCTAssertEqual(3, SiteRatingCache.shared.get(url: Url.https))
-    }
-
-    func testWhenHTTPSAndClassATOSBeforeScoreIncreasesByOneForEveryTenTrackersDetectedRoundedUpAndAfterScoreIsZero() {
+    func testWhenHTTPSAndClassATOSWithTrackersThenBeforeGradeIsCAndAfterGradeIsA() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
 
         for _ in 0 ..< 11 {
             testee.trackerDetected(MockTrackerBuilder.standard(blocked: false))
         }
 
-        let score = testee.siteScore()
-        XCTAssertEqual(2, score.before)
-        XCTAssertEqual(0, score.after)
+        XCTAssertEqual(.c, testee.beforeGrade)
+        XCTAssertEqual(.a, testee.afterGrade)
     }
 
-    func testWhenSingleTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsOneAfterScoreIsZero() {
+    func testWhenSingleTrackerDetectedAndHTTPSAndClassATOSThenBeforeGradeIsBAndAfterGradeIsA() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
         testee.trackerDetected(MockTrackerBuilder.standard(blocked: false))
-        let score = testee.siteScore()
-        XCTAssertEqual(1, score.before)
-        XCTAssertEqual(0, score.after)
+        XCTAssertEqual(.b, testee.beforeGrade)
+        XCTAssertEqual(.a, testee.afterGrade)
     }
 
-    func testWhenObsecureTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsTwoAfterScoreIsZero() {
+    func testWhenObsecureTrackerDetectedAndHTTPSAndClassATOSThenBeforeGradeIsCAndAfterGradeIsA() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
         testee.trackerDetected(MockTrackerBuilder.ipTracker(blocked: true))
-        let score = testee.siteScore()
-        XCTAssertEqual(2, score.before)
-        XCTAssertEqual(0, score.after)
+        XCTAssertEqual(.c, testee.beforeGrade)
+        XCTAssertEqual(.a, testee.afterGrade)
     }
 
-    func testWhenNoTrackersHTTPSAndClassATOSThenLoadsInsecureResourceScoreIsOne() {
+    func testWhenNoTrackersHTTPSAndClassATOSThenLoadsInsecureResourceThenGradeIsB() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
         testee.hasOnlySecureContent = false
-        let score = testee.siteScore()
-        XCTAssertEqual(1, score.before)
-        XCTAssertEqual(1, score.after)
+        XCTAssertEqual(.b, testee.beforeGrade)
+        XCTAssertEqual(.b, testee.afterGrade)
     }
 
-    func testWhenNoTrackersAndHTTPAndClassATOSScoreIsOne() {
+    func testWhenNoTrackersAndHTTPAndClassATOSThenGradeIsB() {
         let testee = SiteRating(url: Url.http, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
-        let score = testee.siteScore()
-        XCTAssertEqual(1, score.before)
-        XCTAssertEqual(1, score.after)
+        XCTAssertEqual(.b, testee.beforeGrade)
+        XCTAssertEqual(.b, testee.afterGrade)
     }
 
-    func testWhenTrackerDetectedInMajorTrackerNetworkAndHTTPSAndClassATOSBeforeScoreIsTwoAfterScoreIsOne() {
+    func testWhenTrackerDetectedInMajorTrackerNetworkAndHTTPSAndClassATOSThenBeforeGradeIsCAndAfterGradeIsB() {
         let disconnectMeTrackers = [Url.https.host!: DisconnectMeTracker(url: Url.googleNetwork.absoluteString, networkName: "Google")]
         let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Google", domain: Url.googleNetwork.host!, perentageOfPages: 84))
         let testee = SiteRating(url: URL(string: "https://another.com")!, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)
         testee.trackerDetected(DetectedTracker(url: "https://tracky.com/tracker.js", networkName: nil, category: nil, blocked: false))
-        let score = testee.siteScore()
-        XCTAssertEqual(2, score.before)
-        XCTAssertEqual(1, score.after)
+        XCTAssertEqual(.c, testee.beforeGrade)
+        XCTAssertEqual(.b, testee.afterGrade)
     }
 
-    func testWhenSiteIsMajorTrackerNetworkAndHTTPSAndClassATOSScoreIsTen() {
+    func testWhenSiteIsMajorTrackerNetworkAndHTTPSAndClassAThenDGrade() {
         let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Google", domain: Url.googleNetwork.host!, perentageOfPages: 84))
         let testee = SiteRating(url: Url.googleNetwork, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)
-        let score = testee.siteScore()
-        XCTAssertEqual(10, score.before)
-        XCTAssertEqual(10, score.after)
+        XCTAssertEqual(.d, testee.beforeGrade)
+        XCTAssertEqual(.d, testee.afterGrade)
     }
 
-    func testWhenNoTrackersAndHTTPSAndPositiveTOSScoreIsTwo() {
+    func testWhenNoTrackersAndHTTPSAndPositiveTOSThenCGrade() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: nil, score: 10))
-        let score = testee.siteScore()
-        XCTAssertEqual(2, score.before)
-        XCTAssertEqual(2, score.after)
+        XCTAssertEqual(.c, testee.beforeGrade)
+        XCTAssertEqual(.c, testee.afterGrade)
     }
 
-    // TODO check with extension team - the JS logic leaves after unchanged if the normalized score is negative
-    func testWhenNoTrackersAndHTTPSAndNegativeTOSScoreIsZero() {
+    func testWhenNoTrackersAndHTTPSAndNegativeTOSThenAGrade() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: nil, score: -10))
-        let score = testee.siteScore()
-        XCTAssertEqual(0, score.before)
-        XCTAssertEqual(0, score.after)
+        XCTAssertEqual(.a, testee.beforeGrade)
+        XCTAssertEqual(.a, testee.afterGrade)
     }
 
-    func testWhenNoTrackersAndHTTPSAndClassETOSScoreIsThree() {
+    func testWhenNoTrackersAndHTTPSAndClassETOSThenDGrade() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .e, score: 0))
-        let score = testee.siteScore()
-        XCTAssertEqual(3, score.before)
-        XCTAssertEqual(3, score.after)
+        XCTAssertEqual(.d, testee.beforeGrade)
+        XCTAssertEqual(.d, testee.afterGrade)
     }
 
-    func testWhenNoTrackersAndHTTPSAndClassDTOSScoreIsTwo() {
+    func testWhenNoTrackersAndHTTPSAndClassDTOSThenCGrade() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .d, score: 0))
-        let score = testee.siteScore()
-        XCTAssertEqual(2, score.before)
-        XCTAssertEqual(2, score.after)
+        XCTAssertEqual(.c, testee.beforeGrade)
+        XCTAssertEqual(.c, testee.afterGrade)
     }
 
-    func testWhenNoTrackersAndHTTPSAndClassCTOSScoreIsOne() {
+    func testWhenNoTrackersAndHTTPSAndClassCTOSThenBGrade() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .c, score: 0))
-        let score = testee.siteScore()
-        XCTAssertEqual(1, score.before)
-        XCTAssertEqual(1, score.after)
+        XCTAssertEqual(.b, testee.beforeGrade)
+        XCTAssertEqual(.b, testee.afterGrade)
     }
 
-    func testWhenNoTrackersAndHTTPSAndClassBTOSScoreIsOne() {
+    func testWhenNoTrackersAndHTTPSAndClassBTOSThenBGrade() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .b, score: 0))
-        let score = testee.siteScore()
-        XCTAssertEqual(1, score.before)
-        XCTAssertEqual(1, score.after)
+        XCTAssertEqual(.b, testee.beforeGrade)
+        XCTAssertEqual(.b, testee.afterGrade)
     }
 
-    func testWhenNoTrackersAndHTTPSAndClassATOSScoreIsZero() {
+    func testWhenNoTrackersAndHTTPSAndClassATOSThenAGrade() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
-        let score = testee.siteScore()
-        XCTAssertEqual(0, score.before)
-        XCTAssertEqual(0, score.after)
+        XCTAssertEqual(.a, testee.beforeGrade)
+        XCTAssertEqual(.a, testee.afterGrade)
     }
 
-    func testWhenNoTrackersAndHTTPSAndNoTOSScoreIsOne() {
+    func testWhenNoTrackersAndHTTPSAndNoTOSThenBGrade() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore())
-        let score = testee.siteScore()
-        XCTAssertEqual(1, score.before)
-        XCTAssertEqual(1, score.after)
+        XCTAssertEqual(SiteGrade.b, testee.beforeGrade)
+        XCTAssertEqual(SiteGrade.b, testee.afterGrade)
     }
 
 }

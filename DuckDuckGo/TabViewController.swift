@@ -153,10 +153,6 @@ class TabViewController: WebViewController {
     fileprivate func updateSiteRating() {
         if isError {
             siteRating = nil
-        } else if let url = url {
-            siteRating?.url = url
-        } else {
-            siteRating = nil
         }
         onSiteRatingChanged()
     }
@@ -491,6 +487,12 @@ extension TabViewController: WebEventsDelegate {
         updateSiteRating()
     }
 
+    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        guard let url = webView.url else { return }
+        siteRating?.url = url
+        updateSiteRating()
+    }
+    
     func webView(_ webView: WKWebView, didChangeUrl url: URL?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
             self?.delegate?.tabLoadingStateDidChange(tab: self!)

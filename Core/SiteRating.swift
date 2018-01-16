@@ -24,7 +24,13 @@ public class SiteRating {
     
     public let protectionId: String
     public var url: URL
-    public var hasOnlySecureContent: Bool
+    
+    public var hasOnlySecureContent: Bool {
+        didSet {
+            recalculateGrade()
+        }
+    }
+    
     public var domain: String? {
         return url.host
     }
@@ -41,8 +47,6 @@ public class SiteRating {
     
     public init(url: URL, disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
         
-        print("***", #function)
-        
         self.protectionId = UUID.init().uuidString
         self.url = url
         self.disconnectMeTrackers = disconnectMeTrackers
@@ -53,13 +57,11 @@ public class SiteRating {
         let cache = SiteRatingCache.shared
         
         if let beforeScore = cache.get(url: url) {
+            afterGrade = SiteGrade.a
             beforeGrade = SiteGrade.grade(fromScore: beforeScore)
         } else {
-            beforeGrade = SiteGrade.a
+            recalculateGrade()
         }
-        
-        afterGrade = SiteGrade.a
-        
     }
     
     public var https: Bool {
@@ -110,10 +112,7 @@ public class SiteRating {
             trackersBlocked[tracker] = blockCount + 1
         }
         
-        let score = siteScore()
-        afterGrade = SiteGrade.grade(fromScore: score.after)
-        beforeGrade = SiteGrade.grade(fromScore: score.before)
-        
+        recalculateGrade()
     }
     
     public var uniqueTrackersDetected: Int {
@@ -153,7 +152,7 @@ public class SiteRating {
         return Set(trackers.keys.flatMap({ $0.networkName ?? $0.domain })).count
     }
 
-    func siteScore() -> ( before: Int, after: Int ) {
+    private func siteScore() -> ( before: Int, after: Int ) {
         
         var beforeScore = 1
         var afterScore = 1
@@ -177,12 +176,17 @@ public class SiteRating {
         
         beforeScore += Int(ceil(Double(totalTrackersDetected) / 10))
         
-        _ = SiteRatingCache.shared.add(url: url, score: beforeScore)
-        
         return ( beforeScore, afterScore )
     }
     
-    func siteGrade() -> ( before: SiteGrade, after: SiteGrade ) {
+    private func recalculateGrade() {
+        let score = siteScore()
+        _ = SiteRatingCache.shared.add(url: url, score: score.before)
+        afterGrade = SiteGrade.grade(fromScore: score.after)
+        beforeGrade = SiteGrade.grade(fromScore: score.before)
+    }
+    
+    private func siteGrade() -> ( before: SiteGrade, after: SiteGrade ) {
         let score = siteScore()
         return ( SiteGrade.grade(fromScore: score.before), SiteGrade.grade(fromScore: score.after ))
     }
@@ -255,6 +259,8 @@ public class SiteRating {
         return ( nil, nil )
     }
 
+    
+    
 }
 
 fileprivate extension DetectedTracker {
