@@ -495,12 +495,6 @@ extension TabViewController: WebEventsDelegate {
         siteRating?.hasOnlySecureContent = hasOnlySecureContent
         updateSiteRating()
     }
-
-    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        guard let url = webView.url else { return }
-        siteRating?.url = url
-        updateSiteRating()
-    }
     
     func webView(_ webView: WKWebView, didChangeUrl url: URL?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in

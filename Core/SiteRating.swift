@@ -187,8 +187,8 @@ public class SiteRating {
         let score = siteScore()
         
         let entry = SiteRatingCache.CacheEntry(score: score.before,
-                                               uniqueTrackerNetworksDetected: uniqueTrackersDetected,
-                                               uniqueTrackerNetworksBlocked: uniqueTrackersBlocked,
+                                               uniqueTrackerNetworksDetected: uniqueTrackerNetworksDetected,
+                                               uniqueTrackerNetworksBlocked: uniqueTrackerNetworksBlocked,
                                                uniqueMajorTrackerNetworksDetected: uniqueMajorTrackerNetworksDetected,
                                                uniqueMajorTrackerNetworksBlocked: uniqueMajorTrackerNetworksDetected,
                                                hasOnlySecureContent: hasOnlySecureContent)
