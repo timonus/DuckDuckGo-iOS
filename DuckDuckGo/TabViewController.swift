@@ -23,8 +23,118 @@ import SafariServices
 import Core
 import Device
 
-class TabViewController: WebViewController {
+class TabViewController: UIViewController {
+
+    @IBOutlet weak var webViewContainer: UIView!
+    @IBOutlet weak var progressBar: UIProgressView!
+
+    weak var delegate: TabDelegate?
+
+    private(set) var tabModel: Tab!
+    private(set) var contentBlocker: ContentBlockerConfigurationStore!
+    private(set) var link: Link?
+
+    private var webView = WKWebView()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initWebView()
+    }
+    
+    func dismiss() {
+        print("***", #function)
+    }
+    
+    func destroy() {
+        print("***", #function)
+    }
+    
+    func load(url: URL) {
+        print("***", #function, url)
+        webView.load(URLRequest(url: url))
+    }
+    
+    func reload() {
+        print("***", #function)
+    }
+    
+    func goBack() {
+        print("***", #function)
+        webView.goBack()
+    }
+    
+    func goForward() {
+        print("***", #function)
+        webView.goForward()
+    }
+    
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        guard let keyPath = keyPath else { return }
+        
+        switch(keyPath) {
+            
+        case "estimatedProgress":
+            // progressBar.progress = Float(webView.estimatedProgress)
+            print("***", #function, "estimateProgress", Float(webView.estimatedProgress))
+            updateProgress(Float(webView.estimatedProgress))
+            
+        case "hasOnlySecureContent":
+            // webEventsDelegate?.webView(webView, didUpdateHasOnlySecureContent: webView.hasOnlySecureContent)
+            print("***", #function, "hasOnlySecureContent", webView.hasOnlySecureContent)
+            // delegate.tabController(self, hasOnlySecureContent: webView.hasOnlySecureContent)
+
+        case "canGoForward":
+            print("***", #function, "canGoForward")
+            delegate?.tabViewController(self, canGoForward: webView.canGoForward)
+
+        case "canGoBack":
+            print("***", #function, "canGoBack", webView.canGoBack)
+            delegate?.tabViewController(self, canGoBack: webView.canGoBack)
+
+        case "URL":
+            print("***", #function, "URL", webView.url)
+            delegate?.tabViewController(self, urlDidChange: webView.url)
+
+        default:
+            Logger.log(text: "Unhandled keyPath \(keyPath)")
+        }
+    }
+
+    private func initWebView() {
+        webView.allowsBackForwardNavigationGestures = true
+        webView.frame = view.bounds
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        webViewContainer.addSubview(webView)
+        
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
+        
+        // TODO observe trackers
+    }
+    
+    private func updateProgress(_ progress: Float) {
+        progressBar.isHidden = progress < 0.01 || progress > 0.99
+        progressBar.progress = max(0.3, progress)
+    }
+    
+}
+
+extension TabViewController {
+    
+    static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
+        let controller = UIStoryboard(name: "Tab", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
+        controller.contentBlocker = contentBlocker
+        controller.tabModel = model
+        return controller
+    }
+    
+}
+
+/*
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
     weak var delegate: TabDelegate?
@@ -36,13 +146,7 @@ class TabViewController: WebViewController {
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
 
-    static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
-        let controller = UIStoryboard(name: "Tab", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
-        controller.contentBlocker = contentBlocker
-        controller.tabModel = model
-        return controller
-    }
-    
+ 
     required init?(coder aDecoder: NSCoder) {
         tabModel = Tab(link: nil)
         super.init(coder: aDecoder)
@@ -597,3 +701,4 @@ fileprivate extension UIDevice {
     
 }
 
+*/

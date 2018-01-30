@@ -23,6 +23,13 @@ import Core
 
 protocol TabDelegate: class {
 
+    func tabViewController(_ tab: TabViewController, canGoBack: Bool)
+
+    func tabViewController(_ tab: TabViewController, canGoForward: Bool)
+
+    func tabViewController(_ tab: TabViewController, urlDidChange: URL?)
+    
+    /*
     func tabDidRequestNewTab(_ tab: TabViewController)
     
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL)
@@ -36,5 +43,6 @@ protocol TabDelegate: class {
     func tabContentProcessDidTerminate(tab: TabViewController)
     
     func showBars()
-    
+    */
+ 
 }

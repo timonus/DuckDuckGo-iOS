@@ -51,6 +51,8 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.hidesBarsOnSwipe = true
 
         chromeManager = BrowserChromeManager(delegate: self)
         attachOmniBar()
@@ -94,7 +96,7 @@ class MainViewController: UIViewController {
     private func loadInitialView() {
         if let tab = currentTab {
             addToView(tab: tab)
-            refreshControls()
+//            refreshControls()
         } else {
             attachHomeScreen(active: false)
         }
@@ -119,7 +121,7 @@ class MainViewController: UIViewController {
         addToView(controller: controller)
 
         tabManager.clearSelection()
-        refreshControls()
+//        refreshControls()
     }
     
     fileprivate func removeHomeScreen() {
@@ -136,9 +138,9 @@ class MainViewController: UIViewController {
         currentTab?.goForward()
     }
     
-    public var siteRating: SiteRating? {
-        return currentTab?.siteRating
-    }
+//    public var siteRating: SiteRating? {
+//        return currentTab?.siteRating
+//    }
     
     func loadQueryInNewTab(_ query: String) {
         let url = appUrls.url(forQuery: query)
@@ -182,15 +184,16 @@ class MainViewController: UIViewController {
     
     fileprivate func select(tab: TabViewController) {
         addToView(tab: tab)
-        refreshControls()
+//        refreshControls()
     }
     
     private func addToView(tab: TabViewController) {
         removeHomeScreen()
-        currentTab?.chromeDelegate = nil
+        tab.delegate = self
+//        currentTab?.chromeDelegate = nil
         addToView(controller: tab)
-        tab.webView.scrollView.delegate = chromeManager
-        tab.chromeDelegate = self
+//        tab.webView.scrollView.delegate = chromeManager
+//        tab.chromeDelegate = self
     }
 
     private func addToView(controller: UIViewController) {
@@ -221,10 +224,10 @@ class MainViewController: UIViewController {
         window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
     }
     
-    fileprivate func refreshControls() {
-        refreshOmniBar()
-        refreshBackForwardButtons()
-    }
+//    fileprivate func refreshControls() {
+//        refreshOmniBar()
+//        refreshBackForwardButtons()
+//    }
     
     private func refreshOmniBar() {
         guard let tab = currentTab else {
@@ -232,11 +235,11 @@ class MainViewController: UIViewController {
             return
         }
 
-        if !tab.isError {
-            omniBar.refreshText(forUrl: tab.link?.url)
-        }
-
-        omniBar.updateSiteRating(tab.siteRating)
+//        if !tab.isError {
+//            omniBar.refreshText(forUrl: tab.link?.url)
+//        }
+//
+//        omniBar.updateSiteRating(tab.siteRating)
         omniBar.startBrowsing()
     }
     
@@ -247,10 +250,10 @@ class MainViewController: UIViewController {
         homeController?.omniBarWasDismissed()
     }
     
-    fileprivate func refreshBackForwardButtons() {
-        backButton.isEnabled = currentTab?.canGoBack ?? false
-        forwardButton.isEnabled = currentTab?.canGoForward ?? false
-    }
+//    fileprivate func refreshBackForwardButtons() {
+//        backButton.isEnabled = currentTab?.canGoBack ?? false
+//        forwardButton.isEnabled = currentTab?.canGoForward ?? false
+//    }
     
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
         if autocompleteController == nil && appSettings.autocomplete {
@@ -273,9 +276,9 @@ class MainViewController: UIViewController {
         controller.removeFromParentViewController()
     }
     
-    fileprivate func launchBrowsingMenu() {
-        currentTab?.launchBrowsingMenu()
-    }
+//    fileprivate func launchBrowsingMenu() {
+//        currentTab?.launchBrowsingMenu()
+//    }
     
     private func launchFireMenu() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -365,11 +368,11 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onSiteRatingPressed() {
-        currentTab?.showPrivacyProtection()
+//        currentTab?.showPrivacyProtection()
     }
     
     func onMenuPressed() {
-        launchBrowsingMenu()
+//        launchBrowsingMenu()
     }
     
     func onBookmarksPressed() {
@@ -425,9 +428,25 @@ extension MainViewController: HomeControllerDelegate {
 
 extension MainViewController: TabDelegate {
     
+    func tabViewController(_ tab: TabViewController, canGoBack: Bool) {
+        print("***", #function, canGoBack)
+        backButton.isEnabled = canGoBack
+    }
+
+    func tabViewController(_ tab: TabViewController, canGoForward: Bool) {
+        print("***", #function, canGoForward)
+        forwardButton.isEnabled = canGoForward
+    }
+
+    func tabViewController(_ tab: TabViewController, urlDidChange url: URL?) {
+        print("***", #function, url)
+        omniBar.refreshText(forUrl: url)
+    }
+    
+/*
     func tabLoadingStateDidChange(tab: TabViewController) {
         if currentTab == tab {
-            refreshControls()
+//            refreshControls()
         }
         tabManager?.save()
     }
@@ -457,6 +476,7 @@ extension MainViewController: TabDelegate {
     func showBars() {
         chromeManager.reset()
     }
+*/
     
 }
 
