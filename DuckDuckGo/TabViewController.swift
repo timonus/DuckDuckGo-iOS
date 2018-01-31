@@ -25,14 +25,27 @@ import Device
 
 class TabViewController: UIViewController {
 
-    @IBOutlet weak var webViewContainer: UIView!
-    @IBOutlet weak var progressBar: UIProgressView!
+    private enum WebViewKeyPaths: String {
+        case estimatedProgress = "estimatedProgress"
+        case hasOnlySecureContent = "hasOnlySecureContent"
+        case url = "URL"
+        case canGoForward = "canGoForward"
+        case canGoBack = "canGoBack"
+        case title = "title"
+    }
+    
+    // Public properties
 
     weak var delegate: TabDelegate?
-
+    
     private(set) var tabModel: Tab!
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
-    private(set) var link: Link?
+    // private(set) var link: Link?
+    
+    // Internal
+    
+    @IBOutlet weak var webViewContainer: UIView!
+    @IBOutlet weak var progressBar: UIProgressView!
 
     private var webView = WKWebView()
     
@@ -41,12 +54,114 @@ class TabViewController: UIViewController {
         initWebView()
     }
     
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        guard let path = WebViewKeyPaths.init(rawValue: keyPath ?? "") else {
+            print("***", #function, "keyPath", keyPath as Any)
+            return
+        }
+
+        switch(path) {
+            
+        case .estimatedProgress:
+            // progressBar.progress = Float(webView.estimatedProgress)
+            print("***", #function, path.rawValue, Float(webView.estimatedProgress))
+            updateProgress(Float(webView.estimatedProgress))
+            
+        case .hasOnlySecureContent:
+            // webEventsDelegate?.webView(webView, didUpdateHasOnlySecureContent: webView.hasOnlySecureContent)
+            print("***", #function, path.rawValue, webView.hasOnlySecureContent)
+            // delegate.tabController(self, hasOnlySecureContent: webView.hasOnlySecureContent)
+
+        case .canGoForward:
+            print("***", #function, path.rawValue)
+            delegate?.tabViewController(self, canGoForward: webView.canGoForward)
+
+        case .canGoBack:
+            print("***", #function, path.rawValue, webView.canGoBack)
+            delegate?.tabViewController(self, canGoBack: webView.canGoBack)
+
+        case .url:
+            print("***", #function, path.rawValue, webView.url as Any)
+            delegate?.tabViewController(self, urlDidChange: webView.url)
+            updateLink()
+            
+        case .title:
+            print("***", #function, path.rawValue, webView.title as Any)
+            delegate?.tabViewController(self, titleDidChange: webView.title)
+            updateLink()
+        }
+    }
+
+    private func initWebView() {
+        webView.allowsBackForwardNavigationGestures = true
+        webView.frame = view.bounds
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        webViewContainer.addSubview(webView)
+        
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
+
+        webView.navigationDelegate = self
+        // TODO observe trackers
+    }
+    
+    private func tearDownWebView() {
+        print("***", #function)
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent))
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward))
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
+        webView.removeObserver(self, forKeyPath:#keyPath(WKWebView.title))
+
+        webView.removeFromSuperview()
+    }
+    
+    private func updateLink() {
+        print("***", #function)
+        if let url = webView.url {
+            tabModel.link = Link(title: webView.title, url: url)
+        } else {
+            tabModel.link = nil
+        }
+    }
+    
+    private func updateProgress(_ progress: Float) {
+        print("***", #function)
+        progressBar.isHidden = progress < 0.01 || progress > 0.99
+        progressBar.progress = max(0.3, progress)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // TODO handle memory warnings
+        print("***", #function)
+    }
+    
+    deinit {
+        print("***", #function)
+    }
+    
+}
+
+// Public interface
+extension TabViewController {
+    
     func dismiss() {
         print("***", #function)
+        removeFromParentViewController()
+        view.removeFromSuperview()
     }
     
     func destroy() {
         print("***", #function)
+        dismiss()
+        tearDownWebView()
     }
     
     func load(url: URL) {
@@ -56,6 +171,7 @@ class TabViewController: UIViewController {
     
     func reload() {
         print("***", #function)
+        webView.reload()
     }
     
     func goBack() {
@@ -68,57 +184,51 @@ class TabViewController: UIViewController {
         webView.goForward()
     }
     
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        
-        guard let keyPath = keyPath else { return }
-        
-        switch(keyPath) {
-            
-        case "estimatedProgress":
-            // progressBar.progress = Float(webView.estimatedProgress)
-            print("***", #function, "estimateProgress", Float(webView.estimatedProgress))
-            updateProgress(Float(webView.estimatedProgress))
-            
-        case "hasOnlySecureContent":
-            // webEventsDelegate?.webView(webView, didUpdateHasOnlySecureContent: webView.hasOnlySecureContent)
-            print("***", #function, "hasOnlySecureContent", webView.hasOnlySecureContent)
-            // delegate.tabController(self, hasOnlySecureContent: webView.hasOnlySecureContent)
+}
 
-        case "canGoForward":
-            print("***", #function, "canGoForward")
-            delegate?.tabViewController(self, canGoForward: webView.canGoForward)
-
-        case "canGoBack":
-            print("***", #function, "canGoBack", webView.canGoBack)
-            delegate?.tabViewController(self, canGoBack: webView.canGoBack)
-
-        case "URL":
-            print("***", #function, "URL", webView.url)
-            delegate?.tabViewController(self, urlDidChange: webView.url)
-
-        default:
-            Logger.log(text: "Unhandled keyPath \(keyPath)")
-        }
-    }
-
-    private func initWebView() {
-        webView.allowsBackForwardNavigationGestures = true
-        webView.frame = view.bounds
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        webViewContainer.addSubview(webView)
-        
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
-        
-        // TODO observe trackers
+extension TabViewController: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        print("***", #function, webView.url as Any, navigationAction)
+        decisionHandler(.allow)
     }
     
-    private func updateProgress(_ progress: Float) {
-        progressBar.isHidden = progress < 0.01 || progress > 0.99
-        progressBar.progress = max(0.3, progress)
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        print("***", #function, webView.url as Any)
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        print("***", #function, webView.url as Any, navigationResponse)
+        decisionHandler(.allow)
+    }
+    
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        print("***", #function, webView.url as Any)
+    }
+    
+    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        print("***", #function, webView.url as Any)
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        print("***", #function, webView.url as Any)
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        print("***", #function, webView.url as Any)
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("***", #function, webView.url as Any)
+    }
+    
+    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        print("***", #function, webView.url as Any, challenge)
+        completionHandler(.performDefaultHandling, nil)
+    }
+    
+    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        print("***", #function)
     }
     
 }

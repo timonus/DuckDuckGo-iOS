@@ -79,7 +79,7 @@ class MainViewController: UIViewController {
         }
 
     }
-
+    
     private func configureTabManager() {
         let tabsModel = TabsModel.get() ?? TabsModel()
         tabManager = TabManager(model: tabsModel, delegate: self)
@@ -280,6 +280,12 @@ class MainViewController: UIViewController {
 //        currentTab?.launchBrowsingMenu()
 //    }
     
+    private func launchBrowsingMenu() {
+        print("***", #function)
+        let controller = BrowsingMenu.build(withDelegate: self)
+        present(controller: controller, fromView: omniBar.menuButton)
+    }
+    
     private func launchFireMenu() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(forgetAllAction())
@@ -299,6 +305,15 @@ class MainViewController: UIViewController {
         present(controller, animated: true, completion: nil)
     }
 
+}
+
+extension MainViewController: BrowsingMenuDelegate {
+    
+    func onBrowsingMenuRefresh() {
+        print("***", #function)
+        currentTab?.reload()
+    }
+    
 }
 
 extension MainViewController: BrowserChromeDelegate {
@@ -372,7 +387,7 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onMenuPressed() {
-//        launchBrowsingMenu()
+        launchBrowsingMenu()
     }
     
     func onBookmarksPressed() {
@@ -439,8 +454,12 @@ extension MainViewController: TabDelegate {
     }
 
     func tabViewController(_ tab: TabViewController, urlDidChange url: URL?) {
-        print("***", #function, url)
+        print("***", #function, url as Any)
         omniBar.refreshText(forUrl: url)
+    }
+    
+    func tabViewController(_ tab: TabViewController, titleDidChange title: String?) {
+        print("***", #function, title as Any)
     }
     
 /*

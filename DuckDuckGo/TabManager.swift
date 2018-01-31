@@ -128,10 +128,10 @@ class TabManager {
     
     private func cachedController(forTab tab: Tab) -> TabViewController? {
         let controller = tabControllerCache.filter( { $0.tabModel === tab } ).first
-        if let link = controller?.link {
-            tab.link = link
-            save()
-        }
+//        if let link = controller?.link {
+//            tab.link = link
+//            save()
+//        }
         return controller
     }
     
