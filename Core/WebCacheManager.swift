@@ -26,41 +26,38 @@ public class WebCacheManager {
         static let internalCache = "duckduckgo.com"
     }
     
-    private static var allData: Set<String> {
-        return WKWebsiteDataStore.allWebsiteDataTypes()
-    }
-    
+    private static var allData: Set<String> = WKWebsiteDataStore.allWebsiteDataTypes()
+    private static var ddgData: Set<String> = allData.subtracting([ WKWebsiteDataTypeCookies ])
+
     private static var dataStore: WKWebsiteDataStore {
         return WKWebsiteDataStore.default()
     }
     
     /**
-     Provides a summary of the external (non-duckduckgo) cached data
-     */
-    public static func summary(completionHandler: @escaping (_ summary: WebCacheSummary) -> Void) {
-         dataStore.fetchDataRecords(ofTypes: allData, completionHandler: { records in
-            let count = records.reduce(0) { (count, record) in
-                if record.displayName == Constants.internalCache {
-                    return count
-                }
-                return count + record.dataTypes.count
-            }
-            Logger.log(text: String(format: "Web cache retrieved, there are %d items in the cache", count))
-            completionHandler(WebCacheSummary(count: count))
-        })
-    }
-    
-    /**
      Clears the cache of all external (non-duckduckgo) data
      */
-    public static func clear(completionHandler: @escaping () -> Void) {
+    public static func clear() {
         dataStore.fetchDataRecords(ofTypes: allData) { records in
-            let externalRecords = records.filter { $0.displayName != Constants.internalCache }
-            dataStore.removeData(ofTypes: allData, for: externalRecords) {
-                Logger.log(text: "External cache cleared")
-                completionHandler()
-            }
+            clearExternalRecords(records)
+            clearDDGRecord(records)
+        }
+    }
+    
+    private static func clearDDGRecord(_ records: [WKWebsiteDataRecord]) {
+        guard let record = records.first(where: { $0.displayName == Constants.internalCache }) else {
+            Logger.log(text: "DDG cache not found")
+            return
+        }
+        
+        dataStore.removeData(ofTypes: ddgData, for: [record]) {
+            Logger.log(text: "DDG cache cleared")
+        }
+    }
+    
+    private static func clearExternalRecords(_ records: [WKWebsiteDataRecord]) {
+        let externalRecords = records.filter { $0.displayName != Constants.internalCache }
+        dataStore.removeData(ofTypes: allData, for: externalRecords) {
+            Logger.log(text: "External cache cleared")
         }
     }
 }
-    
