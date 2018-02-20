@@ -1,10 +1,22 @@
 //
 //  SpeedTests.swift
-//  SpeedTests
+//  DuckDuckGo
 //
-//  Created by Chris Brind on 20/02/2018.
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
 //
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
 
 import XCTest
 
@@ -49,7 +61,10 @@ class SpeedTests: XCTestCase {
         let sites = try! JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [[String: String]]
         
         for site in sites {
-            guard let url = site["url"] else { continue }
+            guard let url = site["url"] else {
+                XCTFail("site has no url \(site)")
+                return
+            }
             
             let time = evalulate(url)
             results.append([ "url": url, "time": time ])
