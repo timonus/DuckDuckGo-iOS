@@ -67,7 +67,11 @@ class SpeedTests: XCTestCase {
             }
             
             let time = evalulate(url)
-            results.append([ "url": url, "time": time ])
+            results.append([
+                "url": url,
+                "time": time,
+                "trackers": mainController.siteRating?.totalTrackersDetected ?? -1
+                ])
             waitFor(seconds: 2)
         }
         
