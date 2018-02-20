@@ -106,7 +106,7 @@ class SpeedTests: XCTestCase {
     func saveResults() {
         let fileName = Filename.report
         let fileUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!.appendingPathComponent(fileName)
-        let jsonResults = try! JSONSerialization.data(withJSONObject: results, options: .prettyPrinted)
+        let jsonResults = try! JSONSerialization.data(withJSONObject: results, options: [ .prettyPrinted, .sortedKeys ])
         var stringResults = String(data: jsonResults, encoding: .utf8)!
         stringResults = stringResults.replacingOccurrences(of: "\\/", with: "/")
         try! stringResults.write(to: fileUrl, atomically: true, encoding: .utf8)
